@@ -14,8 +14,8 @@ export const searchUsers = (
 ): Promise<PageResult<UserAdminResponse[]>> =>
   api.post<PageResult<UserAdminResponse[]>>('/admin/users/search', data, { params: { pageIndex, pageSize, sortField, sortOrder } }).then((res) => res.data)
 
-export const updateUser = (id: number, data: UpdateUserAdminRequest): Promise<Result<void>> =>
+export const updateUser = (id: string, data: UpdateUserAdminRequest): Promise<Result<void>> =>
   api.put<Result<void>>(`/admin/users/${id}`, data).then((res) => res.data)
 
-export const deleteUser = (id: number): Promise<Result<void>> =>
+export const deleteUser = (id: string): Promise<Result<void>> =>
   api.delete<Result<void>>(`/admin/users/${id}`).then((res) => res.data)

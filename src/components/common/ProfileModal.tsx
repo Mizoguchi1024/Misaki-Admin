@@ -45,25 +45,21 @@ export default function ProfileModal({ open, onCancel }: ProfileModalProps): Rea
   const mutation = useMutation({
     mutationFn: updateProfile,
     onSuccess: () => {
+      message.success(t('profileSaved'))
       queryClient.invalidateQueries({ queryKey: ['profile'] })
     }
   })
 
   const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-    try {
-      mutation.mutate({
-        username: values.username,
-        gender: values.gender,
-        birthday: values.birthday?.format('YYYY-MM-DD') ?? undefined,
-        avatarPath: values.avatarPath,
-        occupation: values.occupation,
-        detail: values.detail,
-        version: version!
-      })
-      message.success(t('profileSaved'))
-    } catch {
-      return
-    }
+    mutation.mutate({
+      username: values.username,
+      gender: values.gender,
+      birthday: values.birthday?.format('YYYY-MM-DD') ?? undefined,
+      avatarPath: values.avatarPath,
+      occupation: values.occupation,
+      detail: values.detail,
+      version: version!
+    })
   }
 
   return (

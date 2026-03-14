@@ -4,9 +4,9 @@ export type AddAssistantAdminRequest = {
   detail?: string
   gender: number
   birthday?: string
-  modelId: number
-  creatorId: number
-  ownerId: number
+  modelId: string
+  creatorId: string
+  ownerId: string
   publicFlag: boolean
 }
 
@@ -33,9 +33,9 @@ export type AssistantAdminResponse = {
   detail: string
   gender: number
   birthday: string
-  modelId: number
-  creatorId: number
-  ownerId: number
+  modelId: string
+  creatorId: string
+  ownerId: string
   publicFlag: boolean
   deleteFlag: boolean
   createTime: string

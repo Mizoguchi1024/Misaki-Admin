@@ -1,12 +1,21 @@
 import { App, Layout, Menu, type MenuProps } from 'antd'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
-import { ClockCircleOutlined, FormOutlined, HeartOutlined, MessageOutlined, SearchOutlined, SendOutlined, StarOutlined, UserOutlined } from '@ant-design/icons'
+import {
+  ClockCircleOutlined,
+  FormOutlined,
+  HeartOutlined,
+  MessageOutlined,
+  SendOutlined,
+  StarOutlined,
+  UserOutlined
+} from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import MisakiButton from '../common/MisakiButton'
 import UserDropdown from '../common/UserDropdown'
 import { useUserStore } from '@/store/user'
 import McpLogo from '@/assets/img/mcp-logo.svg?react'
+import { useSettingsStore } from '@/store/settings'
 
 const { Header, Content, Sider } = Layout
 
@@ -17,6 +26,11 @@ export default function MainLayout(): React.JSX.Element {
   const location = useLocation()
   const navigate = useNavigate()
   const { jwt } = useUserStore()
+  const { setStaticMessage } = useSettingsStore()
+
+  useEffect(() => {
+    setStaticMessage(message)
+  }, [])
 
   const menuItems: MenuProps['items'] = [
     {

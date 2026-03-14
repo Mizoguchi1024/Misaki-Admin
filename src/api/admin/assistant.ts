@@ -14,8 +14,8 @@ export const searchAssistants = (
 ): Promise<PageResult<AssistantAdminResponse[]>> =>
   api.post<PageResult<AssistantAdminResponse[]>>('/admin/assistants/search', data, { params: { pageIndex, pageSize, sortField, sortOrder } }).then((res) => res.data)
 
-export const updateAssistant = (id: number, data: UpdateAssistantAdminRequest): Promise<Result<void>> =>
+export const updateAssistant = (id: string, data: UpdateAssistantAdminRequest): Promise<Result<void>> =>
   api.put<Result<void>>(`/admin/assistants/${id}`, data).then((res) => res.data)
 
-export const deleteAssistant = (id: number): Promise<Result<void>> =>
+export const deleteAssistant = (id: string): Promise<Result<void>> =>
   api.delete<Result<void>>(`/admin/assistants/${id}`).then((res) => res.data)

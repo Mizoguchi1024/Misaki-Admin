@@ -11,8 +11,8 @@ export const searchFeedbacks = (
 ): Promise<PageResult<FeedbackAdminResponse[]>> =>
   api.post<PageResult<FeedbackAdminResponse[]>>('/admin/feedbacks/search', data, { params: { pageIndex, pageSize, sortField, sortOrder } }).then((res) => res.data)
 
-export const updateFeedback = (id: number, data: UpdateFeedbackAdminRequest): Promise<Result<void>> =>
+export const updateFeedback = (id: string, data: UpdateFeedbackAdminRequest): Promise<Result<void>> =>
   api.put<Result<void>>(`/admin/feedbacks/${id}`, data).then((res) => res.data)
 
-export const deleteFeedback = (id: number): Promise<Result<void>> =>
+export const deleteFeedback = (id: string): Promise<Result<void>> =>
   api.delete<Result<void>>(`/admin/feedbacks/${id}`).then((res) => res.data)

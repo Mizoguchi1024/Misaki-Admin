@@ -11,8 +11,8 @@ export const searchChats = (
 ): Promise<PageResult<ChatAdminResponse[]>> =>
   api.post<PageResult<ChatAdminResponse[]>>('/admin/chats/search', data, { params: { pageIndex, pageSize, sortField, sortOrder } }).then((res) => res.data)
 
-export const updateChat = (id: number, data: UpdateChatAdminRequest): Promise<Result<void>> =>
+export const updateChat = (id: string, data: UpdateChatAdminRequest): Promise<Result<void>> =>
   api.put<Result<void>>(`/admin/chats/${id}`, data).then((res) => res.data)
 
-export const deleteChat = (id: number): Promise<Result<void>> =>
+export const deleteChat = (id: string): Promise<Result<void>> =>
   api.delete<Result<void>>(`/admin/chats/${id}`).then((res) => res.data)
