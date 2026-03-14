@@ -5,14 +5,10 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-#root {
+/* #root {
   height: 100vh;
   width: 100vw;
-}
-
-.ant-table{
-  
-}
+} */
 
 .scrollbar-style {
   scrollbar-width: thin;

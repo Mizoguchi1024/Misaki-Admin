@@ -8,8 +8,8 @@ export const searchChats = (
   sortField?: string,
   sortOrder?: string,
   data?: SearchChatAdminRequest
-): Promise<PageResult<ChatAdminResponse>> =>
-  api.post<PageResult<ChatAdminResponse>>('/admin/chats/search', data, { params: { pageIndex, pageSize, sortField, sortOrder } }).then((res) => res.data)
+): Promise<PageResult<ChatAdminResponse[]>> =>
+  api.post<PageResult<ChatAdminResponse[]>>('/admin/chats/search', data, { params: { pageIndex, pageSize, sortField, sortOrder } }).then((res) => res.data)
 
 export const updateChat = (id: number, data: UpdateChatAdminRequest): Promise<Result<void>> =>
   api.put<Result<void>>(`/admin/chats/${id}`, data).then((res) => res.data)

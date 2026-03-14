@@ -1,5 +1,4 @@
 import { searchUsers } from '@/api/admin/user'
-import { useSettingsStore } from '@/store/settings'
 import type { UserAdminResponse } from '@/types/user'
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons'
 import { useQuery } from '@tanstack/react-query'
@@ -9,11 +8,11 @@ import { useTranslation } from 'react-i18next'
 
 export default function User(): React.JSX.Element {
   const { t } = useTranslation()
-  const { borderRadius } = useSettingsStore()
   const [pageIndex, setPageIndex] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [sortField, setSortField] = useState('id')
   const [sortOrder, setSortOrder] = useState('asc')
+  const [selectedRowKey, setSelectedRowKey] = useState(null)
 
   const { data, isLoading } = useQuery({
     queryKey: ['users', pageIndex, pageSize, sortField, sortOrder],
@@ -104,47 +103,46 @@ export default function User(): React.JSX.Element {
   ]
 
   return (
-    <div className="h-full w-full flex flex-col gap-4 p-4">
+    <div className="h-full w-full flex flex-col items-center gap-4 py-4 px-8 overflow-x-hidden overflow-y-auto scrollbar-style">
       <div className="flex items-center justify-start gap-4">
         <Button variant="filled" color="green" shape="circle" icon={<PlusOutlined />} />
         <Button variant="filled" color="blue" shape="circle" icon={<EditOutlined />} />
         <Button variant="filled" color="red" shape="circle" icon={<DeleteOutlined />} />
         <div>{pageIndex + ',' + pageSize + ',' + sortField + ',' + sortOrder}</div>
       </div>
-      <Table<UserAdminResponse>
-        columns={columns}
-        dataSource={list}
-        loading={isLoading}
-        rowSelection={{ type: 'checkbox' }}
-        pagination={false}
-        scroll={{ y: '100%' }}
-        footer={() => (
-          <Pagination
-            current={pageIndex}
-            onChange={(page, pageSize) => {
-              setPageIndex(page)
-              setPageSize(pageSize)
-            }}
-            pageSize={pageSize}
-            total={+(total ?? '0')}
-            showTotal={(total) => t('total', { total })}
-            showSizeChanger={{
-              options: [
-                { value: 10, label: 10 },
-                { value: 20, label: 20 },
-                { value: 50, label: 50 },
-                { value: 100, label: 100 }
-              ],
-              showSearch: false
-            }}
-          />
-        )}
-        classNames={{
-          header: {
-            cell: 'select-none'
-          },
-           content: 'bg-transparent',
-          footer: 'flex items-center justify-center'
+        <Table<UserAdminResponse>
+          rowKey="id"
+          columns={columns}
+          dataSource={list}
+          loading={isLoading}
+          scroll={{ y:  600 }}
+          rowSelection={{ type: 'radio' }}
+          pagination={false}
+          className='flex-1'
+          classNames={{
+            header: {
+              cell: 'select-none'
+            },
+            footer: 'flex items-center justify-center'
+          }}
+        />
+      <Pagination
+        current={pageIndex}
+        onChange={(page, pageSize) => {
+          setPageIndex(page)
+          setPageSize(pageSize)
+        }}
+        pageSize={pageSize}
+        total={+(total ?? '0')}
+        showTotal={(total, range) => `${range[0]}-${range[1]} / ${total}`}
+        showSizeChanger={{
+          options: [
+            { value: 10, label: 10 },
+            { value: 20, label: 20 },
+            { value: 50, label: 50 },
+            { value: 100, label: 100 }
+          ],
+          showSearch: false
         }}
       />
     </div>

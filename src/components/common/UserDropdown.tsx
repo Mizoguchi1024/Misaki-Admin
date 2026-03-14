@@ -4,7 +4,7 @@ import {
   SettingOutlined,
   UserOutlined
 } from '@ant-design/icons'
-import { Avatar, Button, Dropdown, Skeleton, type MenuProps } from 'antd'
+import { Avatar, Button, Dropdown, Spin, type MenuProps } from 'antd'
 import { useTranslation } from 'react-i18next'
 import AboutModal from './AboutModal'
 import SettingsModal from './SettingsModal'
@@ -85,14 +85,16 @@ export default function UserDropdown(): React.JSX.Element {
           itemContent: 'select-none'
         }}
       >
-        <Button size="large" color="default" variant="filled">
-          {avatarPath ? (
-            <Avatar size="small" src={'http://www.localhost:9000' + avatarPath} />
-          ) : (
-            <Avatar size="small" icon={<UserOutlined />} />
-          )}
-          {username}
-        </Button>
+        <Spin spinning={isLoading}>
+          <Button size="large" color="default" variant="filled">
+            {avatarPath ? (
+              <Avatar size="small" src={'http://www.localhost:9000' + avatarPath} />
+            ) : (
+              <Avatar size="small" icon={<UserOutlined />} />
+            )}
+            {username}
+          </Button>
+        </Spin>
       </Dropdown>
       <ProfileModal open={isProfileModalOpen} onCancel={() => setIsProfileModalOpen(false)} />
       <SettingsModal open={isSettingsModalOpen} onCancel={() => setIsSettingsModalOpen(false)} />

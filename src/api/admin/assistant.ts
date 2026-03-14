@@ -11,8 +11,8 @@ export const searchAssistants = (
   sortField?: string,
   sortOrder?: string,
   data?: SearchAssistantAdminRequest
-): Promise<PageResult<AssistantAdminResponse>> =>
-  api.post<PageResult<AssistantAdminResponse>>('/admin/assistants/search', data, { params: { pageIndex, pageSize, sortField, sortOrder } }).then((res) => res.data)
+): Promise<PageResult<AssistantAdminResponse[]>> =>
+  api.post<PageResult<AssistantAdminResponse[]>>('/admin/assistants/search', data, { params: { pageIndex, pageSize, sortField, sortOrder } }).then((res) => res.data)
 
 export const updateAssistant = (id: number, data: UpdateAssistantAdminRequest): Promise<Result<void>> =>
   api.put<Result<void>>(`/admin/assistants/${id}`, data).then((res) => res.data)

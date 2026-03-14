@@ -8,8 +8,8 @@ export const searchFeedbacks = (
   sortField?: string,
   sortOrder?: string,
   data?: SearchFeedbackAdminRequest
-): Promise<PageResult<FeedbackAdminResponse>> =>
-  api.post<PageResult<FeedbackAdminResponse>>('/admin/feedbacks/search', data, { params: { pageIndex, pageSize, sortField, sortOrder } }).then((res) => res.data)
+): Promise<PageResult<FeedbackAdminResponse[]>> =>
+  api.post<PageResult<FeedbackAdminResponse[]>>('/admin/feedbacks/search', data, { params: { pageIndex, pageSize, sortField, sortOrder } }).then((res) => res.data)
 
 export const updateFeedback = (id: number, data: UpdateFeedbackAdminRequest): Promise<Result<void>> =>
   api.put<Result<void>>(`/admin/feedbacks/${id}`, data).then((res) => res.data)

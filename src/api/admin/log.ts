@@ -13,10 +13,10 @@ export const searchEmailLogs = (
   sortField?: string,
   sortOrder?: string,
   data?: SearchEmailLogAdminRequest
-): Promise<PageResult<EmailLogAdminResponse>> =>
+): Promise<PageResult<EmailLogAdminResponse[]>> =>
   api
     .post<
-      PageResult<EmailLogAdminResponse>
+      PageResult<EmailLogAdminResponse[]>
     >('/admin/logs/email/search', data, { params: { pageIndex, pageSize, sortField, sortOrder } })
     .then((res) => res.data)
 
@@ -29,10 +29,10 @@ export const searchExceptionLogs = (
   sortField?: string,
   sortOrder?: string,
   data?: SearchExceptionLogAdminRequest
-): Promise<PageResult<ExceptionLogAdminResponse>> =>
+): Promise<PageResult<ExceptionLogAdminResponse[]>> =>
   api
     .post<
-      PageResult<ExceptionLogAdminResponse>
+      PageResult<ExceptionLogAdminResponse[]>
     >('/admin/logs/exception/search', data, { params: { pageIndex, pageSize, sortField, sortOrder } })
     .then((res) => res.data)
 
