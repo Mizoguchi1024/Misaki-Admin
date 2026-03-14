@@ -90,11 +90,12 @@ export type UpdateUserAdminRequest ={
   detail?: string
   authRole?: number
   lastLoginTime?: string
-  token?: string
+  token?: number
   crystal?: number
   puzzle?: number
   stardust?: number
   lastCheckInDate?: string
+  deletePendingFlag?: boolean
   deleteFlag?: boolean
   version: number
 }

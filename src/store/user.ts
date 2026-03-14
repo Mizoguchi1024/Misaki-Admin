@@ -28,7 +28,7 @@ export const useUserStore = create<UserState>()(
       reset: () => set(initialState)
     }),
     {
-      name: 'settings-store'
+      name: 'user-store'
     }
   )
 )

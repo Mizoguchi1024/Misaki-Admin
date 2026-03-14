@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import {
   ClockCircleOutlined,
-  FormOutlined,
   HeartOutlined,
   MessageOutlined,
+  ProductOutlined,
   SendOutlined,
   StarOutlined,
   UserOutlined
@@ -32,11 +32,17 @@ export default function MainLayout(): React.JSX.Element {
     setStaticMessage(message)
   }, [])
 
+  useEffect(() => {
+    if (!jwt) {
+      navigate('/', { viewTransition: true })
+    }
+  }, [jwt])
+
   const menuItems: MenuProps['items'] = [
     {
       key: '/workspace',
       label: t('workspace'),
-      icon: <FormOutlined />
+      icon: <ProductOutlined />
     },
     {
       type: 'divider'
@@ -48,7 +54,7 @@ export default function MainLayout(): React.JSX.Element {
     },
     {
       key: '/user',
-      label: t('users'),
+      label: t('user'),
       icon: <UserOutlined />
     },
     {

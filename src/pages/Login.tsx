@@ -15,7 +15,7 @@ type FieldType = {
 }
 
 export default function Login() {
-  const { t } = useTranslation()
+  const { t } = useTranslation('login')
   const {message} = App.useApp()
   const navigate = useNavigate()
   const { jwt, rememberMe, setAuthInfo, setRememberMe, reset } = useUserStore()

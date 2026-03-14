@@ -1,18 +1,23 @@
 import { createUser, deleteUser, searchUsers, updateUser } from '@/api/admin/user'
 import ImageUpload from '@/components/common/ImageUpload'
 import type { UploadResponse } from '@/types/common'
-import type { UserAdminResponse } from '@/types/user'
-import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons'
+import type { Result } from '@/types/result'
+import type { UpdateUserAdminRequest, UserAdminResponse } from '@/types/user'
+import { DeleteOutlined, EditOutlined, PlusOutlined, UserOutlined } from '@ant-design/icons'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   App,
+  Avatar,
   Badge,
   Button,
+  DatePicker,
   Form,
   Input,
+  InputNumber,
   Modal,
   Pagination,
   Select,
+  Switch,
   Table,
   type TableProps
 } from 'antd'
@@ -26,7 +31,7 @@ const orderMap = {
 }
 
 export default function User(): React.JSX.Element {
-  const { t } = useTranslation()
+  const { t } = useTranslation('user')
   const { message } = App.useApp()
   const [pageIndex, setPageIndex] = useState(1)
   const [pageSize, setPageSize] = useState(10)
@@ -45,7 +50,7 @@ export default function User(): React.JSX.Element {
 
   const { list, total } = data?.data ?? {}
   const selectRowItem = list?.find((item) => item.id === selectedRowKey)
-  
+
   const createUserMutation = useMutation({
     mutationFn: createUser,
     onSuccess: () => {
@@ -56,8 +61,12 @@ export default function User(): React.JSX.Element {
     }
   })
 
-  const updateUserMutation = useMutation({
-    mutationFn: updateUser,
+  const updateUserMutation = useMutation<
+    Result<void>,
+    Error,
+    { id: string; data: UpdateUserAdminRequest }
+  >({
+    mutationFn: ({ id, data }) => updateUser(id, data),
     onSuccess: () => {
       message.success(t('userUpdated'))
       setAvatarPath('')
@@ -99,6 +108,19 @@ export default function User(): React.JSX.Element {
       render: (authRole) => AuthRoleMap[authRole]
     },
     {
+      title: t('avatar'),
+      dataIndex: 'avatarPath',
+      render: (avatarPath) =>
+        avatarPath ? (
+          <Avatar
+            src={'http://localhost:9000' + avatarPath}
+            icon={<UserOutlined />}
+            draggable={false}
+            className="select-none"
+          />
+        ) : null
+    },
+    {
       title: t('email'),
       dataIndex: 'email',
       ellipsis: true,
@@ -107,7 +129,8 @@ export default function User(): React.JSX.Element {
     {
       title: t('username'),
       dataIndex: 'username',
-      sorter: true
+      sorter: true,
+      filterDropdown: true
     },
     {
       title: t('gender'),
@@ -141,6 +164,7 @@ export default function User(): React.JSX.Element {
     {
       title: t('lastCheckInDate'),
       dataIndex: 'lastCheckInDate',
+      ellipsis: true,
       sorter: true
     },
     {
@@ -188,6 +212,7 @@ export default function User(): React.JSX.Element {
           disabled={!selectedRowKey}
           icon={<EditOutlined />}
           onClick={() => {
+            setAvatarPath(selectRowItem?.avatarPath ?? '')
             setUpdateModalOpen(true)
           }}
         />
@@ -270,6 +295,7 @@ export default function User(): React.JSX.Element {
             wrapperCol={{ span: 18 }}
             labelAlign="left"
             className="w-full"
+            validateMessages={{ required: t('requiredTemplate', { label: '${label}' }) }}
             onFinish={async (values) => {
               createUserMutation.mutate({ ...values, avatarPath: avatarPath || undefined })
             }}
@@ -310,6 +336,9 @@ export default function User(): React.JSX.Element {
                 ]}
               />
             </Form.Item>
+            <Form.Item name="birthday" label={t('birthday')}>
+              <DatePicker />
+            </Form.Item>
             <Form.Item name="occupation" label={t('occupation')}>
               <Input />
             </Form.Item>
@@ -330,61 +359,148 @@ export default function User(): React.JSX.Element {
         destroyOnHidden
         footer={null}
       >
-        <Form
-          labelCol={{ span: 6 }}
-          wrapperCol={{ span: 18 }}
-          labelAlign="left"
-          className="w-full"
-          onFinish={async (values) => {
-            updateUserMutation.mutate(selectedRowKey, { ...selectRowItem, ...values, avatarPath: avatarPath || undefined })
-          }}
-        >
-          <Form.Item
-            name="authRole"
-            label={t('authRole')}
-            initialValue={selectRowItem?.authRole}
-            rules={[{ required: true }]}
+        <div className="py-2 flex flex-col items-center gap-4">
+          <ImageUpload
+            imgPath={avatarPath ?? ''}
+            onSuccess={async (data: UploadResponse) => {
+              setAvatarPath(data.path)
+              message.success(t('uploadSuccess'))
+            }}
+          />
+          <Form
+            labelCol={{ span: 6 }}
+            wrapperCol={{ span: 18 }}
+            labelAlign="left"
+            className="w-full"
+            onFinish={async (values) => {
+              updateUserMutation.mutate({
+                id: selectedRowKey,
+                data: {
+                  ...selectRowItem,
+                  ...values,
+                  avatarPath: avatarPath || undefined
+                }
+              })
+            }}
           >
-            <Select
-              options={[
-                { value: 0, label: t('user') },
-                { value: 1, label: t('admin') }
-              ]}
-            />
-          </Form.Item>
-          <Form.Item name="email" label={t('email')} rules={[{ required: true }]}>
-            <Input />
-          </Form.Item>
-          <Form.Item name="username" label={t('username')} rules={[{ required: true }]}>
-            <Input />
-          </Form.Item>
-          <Form.Item name="password" label={t('password')} rules={[{ required: true }]}>
-            <Input.Password />
-          </Form.Item>
-          <Form.Item
-            name="gender"
-            label={t('gender')}
-            initialValue={0}
-            rules={[{ required: true }]}
-          >
-            <Select
-              options={[
-                { value: 0, label: t('unknown') },
-                { value: 1, label: t('male') },
-                { value: 2, label: t('female') }
-              ]}
-            />
-          </Form.Item>
-          <Form.Item name="occupation" label={t('occupation')}>
-            <Input />
-          </Form.Item>
-          <Form.Item name="detail" label={t('detail')}>
-            <Input.TextArea />
-          </Form.Item>
-          <Button type="primary" htmlType="submit" block>
-            {t('create')}
-          </Button>
-        </Form>
+            <Form.Item
+              name="authRole"
+              label={t('authRole')}
+              initialValue={selectRowItem?.authRole}
+              rules={[{ required: true }]}
+            >
+              <Select
+                options={[
+                  { value: 0, label: t('user') },
+                  { value: 1, label: t('admin') }
+                ]}
+              />
+            </Form.Item>
+            <Form.Item
+              name="email"
+              label={t('email')}
+              initialValue={selectRowItem?.email}
+              rules={[{ required: true }]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              name="username"
+              label={t('username')}
+              initialValue={selectRowItem?.username}
+              rules={[{ required: true }]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item name="password" label={t('password')}>
+              <Input.Password placeholder={t('newPassword')} />
+            </Form.Item>
+            <Form.Item
+              name="gender"
+              label={t('gender')}
+              initialValue={selectRowItem?.gender}
+              rules={[{ required: true }]}
+            >
+              <Select
+                options={[
+                  { value: 0, label: t('unknown') },
+                  { value: 1, label: t('male') },
+                  { value: 2, label: t('female') }
+                ]}
+              />
+            </Form.Item>
+            <Form.Item name="birthday" label={t('birthday')}>
+              <DatePicker />
+            </Form.Item>
+            <Form.Item
+              name="occupation"
+              label={t('occupation')}
+              initialValue={selectRowItem?.occupation}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item name="detail" label={t('detail')} initialValue={selectRowItem?.detail}>
+              <Input.TextArea />
+            </Form.Item>
+            <div className="flex justify-between">
+              <Form.Item
+                name="token"
+                label={t('token')}
+                initialValue={selectRowItem?.token}
+                layout="vertical"
+                labelCol={{ span: 24 }}
+              >
+                <InputNumber />
+              </Form.Item>
+              <Form.Item
+                name="crystal"
+                label={t('crystal')}
+                initialValue={selectRowItem?.crystal}
+                layout="vertical"
+                labelCol={{ span: 24 }}
+              >
+                <InputNumber />
+              </Form.Item>
+              <Form.Item
+                name="puzzle"
+                label={t('puzzle')}
+                initialValue={selectRowItem?.puzzle}
+                layout="vertical"
+                labelCol={{ span: 24 }}
+              >
+                <InputNumber />
+              </Form.Item>
+              <Form.Item
+                name="stardust"
+                label={t('stardust')}
+                initialValue={selectRowItem?.stardust}
+                layout="vertical"
+                labelCol={{ span: 24 }}
+              >
+                <InputNumber />
+              </Form.Item>
+            </div>
+            <div className="flex justify-between">
+              <Form.Item
+                name="deletePendingFlag"
+                label={t('deletePendingFlag')}
+                initialValue={selectRowItem?.deletePendingFlag}
+              >
+                <Switch />
+              </Form.Item>
+              <Form.Item
+                name="deleteFlag"
+                label={t('deleteFlag')}
+                initialValue={selectRowItem?.deleteFlag}
+              >
+                <Switch />
+              </Form.Item>
+            </div>
+            <Button type="primary" htmlType="submit" block>
+              {t('update')}
+            </Button>
+          </Form>
+        </div>
       </Modal>
     </div>
   )

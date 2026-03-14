@@ -1,0 +1,15 @@
+{
+    "settings": "设置",
+    "general": "通用",
+    "language": "语言",
+    "appearance": "外观",
+    "auto": "自动",
+    "light": "浅色",
+    "dark": "深色",
+    "fontSize": "字号",
+    "borderRadius": "圆角半径",
+    "resetSettings": "重置设置",
+    "reset": "重置",
+    "deleteAccount": "删除账户",
+    "delete": "删除"
+}

@@ -36,10 +36,10 @@ const initialLocalState = {
   borderRadius: 12
 }
 
-export const LanguageI18nMap = {
-  [0]: 'zh',
-  [1]: 'en',
-  [2]: 'jp'
+export const LanguageI18nMap: Record<number, string> = {
+  0: 'zh',
+  1: 'en',
+  2: 'jp'
 }
 
 export const LanguageAntdMap: Record<number, Locale> = {
@@ -48,10 +48,10 @@ export const LanguageAntdMap: Record<number, Locale> = {
   2: ja_JP
 }
 
-export const LanguageMap = {
-  [0]: '中文',
-  [1]: 'English',
-  [2]: '日本語'
+export const LanguageMap: Record<number, string> = {
+  0: '中文',
+  1: 'English',
+  2: '日本語'
 }
 
 export const useSettingsStore = create<SettingsState>()(
