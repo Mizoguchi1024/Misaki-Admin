@@ -21,30 +21,30 @@ export default function App({ children }: { children?: React.ReactNode }): React
   }, [isSystemDark, appearance])
 
   return (
-    <StyleProvider layer>
-      <ConfigProvider
-        theme={{
-          algorithm:
-            appearance === 2 || (appearance === 0 && isSystemDark)
-              ? theme.darkAlgorithm
-              : theme.defaultAlgorithm,
-          token: {
-            fontSize: fontSize,
-            colorPrimary: '#3142EF',
-            borderRadius: borderRadius
-          },
-          components: {
-            Menu: {
-              activeBarBorderWidth: 0
+    <QueryClientProvider client={queryClient}>
+      <StyleProvider layer>
+        <ConfigProvider
+          theme={{
+            algorithm:
+              appearance === 2 || (appearance === 0 && isSystemDark)
+                ? theme.darkAlgorithm
+                : theme.defaultAlgorithm,
+            token: {
+              fontSize: fontSize,
+              colorPrimary: '#3142EF',
+              borderRadius: borderRadius
+            },
+            components: {
+              Menu: {
+                activeBarBorderWidth: 0
+              }
             }
-          }
-        }}
-        locale={LanguageAntdMap[language]}
-      >
-        <AntdApp message={{ maxCount: 5 }}>
-          <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-        </AntdApp>
-      </ConfigProvider>
-    </StyleProvider>
+          }}
+          locale={LanguageAntdMap[language]}
+        >
+          <AntdApp message={{ maxCount: 5 }}>{children}</AntdApp>
+        </ConfigProvider>
+      </StyleProvider>
+    </QueryClientProvider>
   )
 }

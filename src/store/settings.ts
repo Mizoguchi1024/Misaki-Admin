@@ -4,6 +4,7 @@ import zh_CN from 'antd/locale/zh_CN'
 import en_US from 'antd/locale/en_US'
 import ja_JP from 'antd/locale/ja_JP'
 import type { MessageInstance } from 'antd/es/message/interface'
+import type { Locale } from 'antd/es/locale'
 
 interface SettingsState {
   staticMessage: MessageInstance | null
@@ -41,10 +42,10 @@ export const LanguageI18nMap = {
   [2]: 'jp'
 }
 
-export const LanguageAntdMap = {
-  [0]: zh_CN,
-  [1]: en_US,
-  [2]: ja_JP
+export const LanguageAntdMap: Record<number, Locale> = {
+  0: zh_CN,
+  1: en_US,
+  2: ja_JP
 }
 
 export const LanguageMap = {

@@ -87,11 +87,11 @@ export default function UserDropdown(): React.JSX.Element {
       >
         <Button size="large" color="default" variant="filled">
           {avatarPath ? (
-            <Avatar size="small" src={':9000' + avatarPath} />
+            <Avatar size="small" src={'http://www.localhost:9000' + avatarPath} />
           ) : (
             <Avatar size="small" icon={<UserOutlined />} />
           )}
-          <Skeleton loading={isLoading} avatar round active paragraph={false}>{username}</Skeleton>
+          {username}
         </Button>
       </Dropdown>
       <ProfileModal open={isProfileModalOpen} onCancel={() => setIsProfileModalOpen(false)} />

@@ -1,13 +1,15 @@
 import { searchUsers } from '@/api/admin/user'
+import { useSettingsStore } from '@/store/settings'
 import type { UserAdminResponse } from '@/types/user'
-import { DeleteOutlined, EditOutlined, PlusOutlined, SearchOutlined } from '@ant-design/icons'
+import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons'
 import { useQuery } from '@tanstack/react-query'
-import { Badge, Button, DatePicker, Form, Input, Select, Space, Table, type TableProps } from 'antd'
+import { Badge, Button, Pagination, Table, type TableProps } from 'antd'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 export default function User(): React.JSX.Element {
   const { t } = useTranslation()
+  const { borderRadius } = useSettingsStore()
   const [pageIndex, setPageIndex] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [sortField, setSortField] = useState('id')
@@ -20,18 +22,18 @@ export default function User(): React.JSX.Element {
 
   const { list, total } = data?.data ?? {}
 
-  const AuthRoleMap = {
-    [0]: t('user'),
-    [1]: t('admin')
+  const AuthRoleMap: Record<number, string> = {
+    0: t('user'),
+    1: t('admin')
   }
 
-  const GenderMap = {
-    [0]: t('unknown'),
-    [1]: t('male'),
-    [2]: t('female')
+  const GenderMap: Record<number, string> = {
+    0: t('unknown'),
+    1: t('male'),
+    2: t('female')
   }
 
-  const columns: TableProps['columns'] = [
+  const columns: TableProps<UserAdminResponse>['columns'] = [
     {
       title: t('id'),
       dataIndex: 'id'
@@ -43,7 +45,8 @@ export default function User(): React.JSX.Element {
     },
     {
       title: t('email'),
-      dataIndex: 'email'
+      dataIndex: 'email',
+      ellipsis: true
     },
     {
       title: t('username'),
@@ -60,15 +63,18 @@ export default function User(): React.JSX.Element {
     },
     {
       title: t('occupation'),
-      dataIndex: 'occupation'
+      dataIndex: 'occupation',
+      ellipsis: true
     },
     {
       title: t('detail'),
-      dataIndex: 'detail'
+      dataIndex: 'detail',
+      ellipsis: true
     },
     {
       title: t('lastLoginTime'),
-      dataIndex: 'lastLoginTime'
+      dataIndex: 'lastLoginTime',
+      ellipsis: true
     },
     {
       title: t('lastCheckInDate'),
@@ -87,38 +93,58 @@ export default function User(): React.JSX.Element {
     },
     {
       title: t('updateTime'),
-      dataIndex: 'updateTime'
+      dataIndex: 'updateTime',
+      ellipsis: true
     },
     {
       title: t('createTime'),
-      dataIndex: 'createTime'
-    },
-    {
-      title: t('action'),
-      key: 'action',
-      render: () => (
-        <Space>
-          <Button variant="filled" color="blue" shape="circle" icon={<EditOutlined />} />
-          <Button variant="filled" color="red" shape="circle" icon={<DeleteOutlined />} />
-        </Space>
-      )
+      dataIndex: 'createTime',
+      ellipsis: true
     }
   ]
 
   return (
     <div className="h-full w-full flex flex-col gap-4 p-4">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-start gap-4">
         <Button variant="filled" color="green" shape="circle" icon={<PlusOutlined />} />
+        <Button variant="filled" color="blue" shape="circle" icon={<EditOutlined />} />
+        <Button variant="filled" color="red" shape="circle" icon={<DeleteOutlined />} />
+        <div>{pageIndex + ',' + pageSize + ',' + sortField + ',' + sortOrder}</div>
       </div>
       <Table<UserAdminResponse>
         columns={columns}
         dataSource={list}
         loading={isLoading}
-        pagination={{ placement: ['bottomCenter'] }}
+        rowSelection={{ type: 'checkbox' }}
+        pagination={false}
+        scroll={{ y: '100%' }}
+        footer={() => (
+          <Pagination
+            current={pageIndex}
+            onChange={(page, pageSize) => {
+              setPageIndex(page)
+              setPageSize(pageSize)
+            }}
+            pageSize={pageSize}
+            total={+(total ?? '0')}
+            showTotal={(total) => t('total', { total })}
+            showSizeChanger={{
+              options: [
+                { value: 10, label: 10 },
+                { value: 20, label: 20 },
+                { value: 50, label: 50 },
+                { value: 100, label: 100 }
+              ],
+              showSearch: false
+            }}
+          />
+        )}
         classNames={{
           header: {
             cell: 'select-none'
-          }
+          },
+           content: 'bg-transparent',
+          footer: 'flex items-center justify-center'
         }}
       />
     </div>
