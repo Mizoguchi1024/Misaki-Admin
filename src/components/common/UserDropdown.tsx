@@ -87,11 +87,12 @@ export default function UserDropdown(): React.JSX.Element {
       >
         <Spin spinning={isLoading}>
           <Button size="large" color="default" variant="filled">
-            {avatarPath ? (
-              <Avatar size="small" src={'http://www.localhost:9000' + avatarPath} />
-            ) : (
-              <Avatar size="small" icon={<UserOutlined />} />
-            )}
+            <Avatar
+              size="small"
+              src={'http://www.localhost:9000' + avatarPath}
+              icon={<UserOutlined />}
+              draggable={false}
+            />
             {username}
           </Button>
         </Spin>
