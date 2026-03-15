@@ -16,7 +16,7 @@ type FieldType = {
 
 export default function Login() {
   const { t } = useTranslation('login')
-  const {message} = App.useApp()
+  const { message } = App.useApp()
   const navigate = useNavigate()
   const { jwt, rememberMe, setAuthInfo, setRememberMe, reset } = useUserStore()
   const [submitButtonLoading, setSubmitButtonLoading] = useState(false)
@@ -27,19 +27,20 @@ export default function Login() {
         reset()
         return
       }
+      message.success(t('loginSuccess'))
       navigate('/workspace', { viewTransition: true })
     }
-  }, [])
+  }, [jwt])
 
   return (
     <div className="h-full w-full flex flex-col items-center justify-center gap-24">
       <div className="flex items-center text-8xl select-none">
         <div className="flex items-center gap-2">
           <MisakiLogo className="w-32" />
-          <span className='font-semibold'>Misaki</span>
+          <span className="font-semibold">Misaki</span>
         </div>
         <Divider vertical className="h-full mx-8" />
-        <span className='font-normal'>{t('admin')}</span>
+        <span className="font-normal">{t('admin')}</span>
       </div>
       <GlassBox className="px-12 py-10">
         <Form
@@ -47,15 +48,13 @@ export default function Login() {
           onFinish={async (values) => {
             try {
               const loginRes = await login({ email: values.email, password: values.password })
-              if(loginRes.data.authRole !== 1) {
+              if (loginRes.data.authRole !== 1) {
                 message.error(t('notAdmin'))
                 return
               }
-              setAuthInfo(loginRes.data)
-              setRememberMe(values.rememberMe)
-              message.success(t('loginSuccess'))
               setSubmitButtonLoading(false)
-              navigate('/workspace', { viewTransition: true })
+              setRememberMe(values.rememberMe)
+              setAuthInfo(loginRes.data)
             } catch {
               setTimeout(() => {
                 setSubmitButtonLoading(false)

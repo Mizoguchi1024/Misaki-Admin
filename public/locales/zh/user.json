@@ -25,10 +25,14 @@
     "unknown": "未知",
     "male":"男",
     "female":"女",
+    "false":"假",
+    "true":"真",
     "refresh": "刷新",
     "create": "创建",
     "update": "更改",
     "delete": "删除",
+    "cannotUpdateYourself": "无法更改自己",
+    "cannotDeleteYourself": "无法删除自己",
     "refreshed": "已刷新",
     "userCreated": "用户已创建",
     "userUpdated": "用户已更改",
@@ -36,5 +40,6 @@
     "requiredTemplate": "请输入{{label}}",
     "searchField": "搜索{{field}}",
     "search": "搜索",
+    "filter": "筛选",
     "clear": "清除"
 }

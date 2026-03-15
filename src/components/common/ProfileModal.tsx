@@ -46,7 +46,9 @@ export default function ProfileModal({ open, onCancel }: ProfileModalProps): Rea
     mutationFn: updateProfile,
     onSuccess: () => {
       message.success(t('profileSaved'))
+      onCancel()
       queryClient.invalidateQueries({ queryKey: ['profile'] })
+      queryClient.invalidateQueries({ queryKey: ['users'] })
     }
   })
 
@@ -86,7 +88,6 @@ export default function ProfileModal({ open, onCancel }: ProfileModalProps): Rea
         />
         <Skeleton loading={isLoading} active round title={false}>
           <Form
-            variant="filled"
             name="basic"
             autoComplete="off"
             validateTrigger="onSubmit"
@@ -119,14 +120,14 @@ export default function ProfileModal({ open, onCancel }: ProfileModalProps): Rea
               initialValue={gender}
               rules={[{ required: true }]}
             >
-              <Radio.Group>
-                <Radio.Button value={0} className="bg-black/4 dark:bg-white/8 border-none">
+              <Radio.Group optionType="button" buttonStyle='solid'>
+                <Radio.Button value={0}>
                   {t('unknown')}
                 </Radio.Button>
-                <Radio.Button value={1} className="bg-black/4 dark:bg-white/8 border-none">
+                <Radio.Button value={1}>
                   {t('male')}
                 </Radio.Button>
-                <Radio.Button value={2} className="bg-black/4 dark:bg-white/8 border-none">
+                <Radio.Button value={2}>
                   {t('female')}
                 </Radio.Button>
               </Radio.Group>

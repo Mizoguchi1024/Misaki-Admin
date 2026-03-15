@@ -27,6 +27,7 @@ import {
   InputNumber,
   Modal,
   Pagination,
+  Radio,
   Select,
   Switch,
   Table,
@@ -35,10 +36,11 @@ import {
   type TableColumnType,
   type TableProps
 } from 'antd'
-import type { FilterDropdownProps, SorterResult } from 'antd/es/table/interface'
+import type { ColumnFilterItem, FilterDropdownProps, SorterResult } from 'antd/es/table/interface'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Highlighter from 'react-highlight-words'
+import { getProfile } from '@/api/front/user'
 
 const orderMap = {
   ascend: 'asc',
@@ -72,6 +74,13 @@ export default function User(): React.JSX.Element {
 
   const { list, total } = data?.data ?? {}
   const selectRowItem = list?.find((item) => item.id === selectedRowKey)
+
+  const { data: profile } = useQuery({
+    queryKey: ['profile'],
+    queryFn: getProfile
+  })
+
+  const { id: userId } = profile?.data ?? {}
 
   const createUserMutation = useMutation({
     mutationFn: createUser,
@@ -140,13 +149,6 @@ export default function User(): React.JSX.Element {
         />
         <div className="flex justify-between">
           <Button
-            type="primary"
-            onClick={() => handleSearch(selectedKeys as string[], confirm, dataIndex)}
-            size="small"
-          >
-            {t('search')}
-          </Button>
-          <Button
             onClick={() => {
               clearFilters?.()
               setSelectedKeys([])
@@ -154,9 +156,14 @@ export default function User(): React.JSX.Element {
               setSearchColumn('')
               setSearchText('')
             }}
-            size="small"
           >
             {t('clear')}
+          </Button>
+          <Button
+            type="primary"
+            onClick={() => handleSearch(selectedKeys as string[], confirm, dataIndex)}
+          >
+            {t('search')}
           </Button>
         </div>
       </div>
@@ -189,6 +196,53 @@ export default function User(): React.JSX.Element {
       )
   })
 
+  const getColumnFilterProps = (
+    dataIndex: DataIndex,
+    filterItems: ColumnFilterItem[]
+  ): TableColumnType<UserAdminResponse> => ({
+    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+      <div className="p-2" onKeyDown={(e) => e.stopPropagation()}>
+        <Radio.Group
+          optionType="button"
+          buttonStyle="solid"
+          value={selectedKeys[0]}
+          onChange={(e) => setSelectedKeys([e.target.value])}
+          className="mb-2"
+        >
+          {filterItems.map((item) => (
+            <Radio value={item.value}>{item.text}</Radio>
+          ))}
+        </Radio.Group>
+        <div className="flex justify-between">
+          <Button
+            onClick={() => {
+              clearFilters?.()
+              setSelectedKeys([])
+              confirm()
+              setSearchColumn('')
+              setSearchText('')
+            }}
+          >
+            {t('clear')}
+          </Button>
+          <Button
+            type="primary"
+            onClick={() => handleSearch(selectedKeys as string[], confirm, dataIndex)}
+          >
+            {t('filter')}
+          </Button>
+        </div>
+      </div>
+    ),
+    onFilter: (value) => {
+      setSearchColumn(dataIndex)
+      setSearchText(value as string)
+      return true
+    },
+    filterMultiple: false,
+    filters: filterItems
+  })
+
   const columns: TableProps<UserAdminResponse>['columns'] = [
     {
       title: t('id'),
@@ -200,16 +254,10 @@ export default function User(): React.JSX.Element {
       title: t('authRole'),
       dataIndex: 'authRole',
       sorter: true,
-      filterMultiple: false,
-      filters: [
+      ...getColumnFilterProps('authRole', [
         { text: t('user'), value: 0 },
         { text: t('admin'), value: 1 }
-      ],
-      onFilter: (value) => {
-        setSearchColumn('authRole')
-        setSearchText(value as string)
-        return true
-      },
+      ]),
       render: (authRole) => AuthRoleMap[authRole]
     },
     {
@@ -241,17 +289,11 @@ export default function User(): React.JSX.Element {
       title: t('gender'),
       dataIndex: 'gender',
       sorter: true,
-      filterMultiple: false,
-      filters: [
+      ...getColumnFilterProps('gender', [
         { text: t('unknown'), value: 0 },
         { text: t('male'), value: 1 },
         { text: t('female'), value: 2 }
-      ],
-      onFilter: (value) => {
-        setSearchColumn('gender')
-        setSearchText(value as string)
-        return true
-      },
+      ]),
       render: (gender) => GenderMap[gender]
     },
     {
@@ -289,12 +331,20 @@ export default function User(): React.JSX.Element {
     {
       title: t('deletePendingFlag'),
       dataIndex: 'deletePendingFlag',
+      ...getColumnFilterProps('deletePendingFlag', [
+        { text: t('false'), value: false },
+        { text: t('true'), value: true }
+      ]),
       render: (deletePendingFlag) =>
         deletePendingFlag ? <Badge status="success" /> : <Badge status="default" />
     },
     {
       title: t('deleteFlag'),
       dataIndex: 'deleteFlag',
+      ...getColumnFilterProps('deleteFlag', [
+        { text: t('false'), value: false },
+        { text: t('true'), value: true }
+      ]),
       render: (deleteFlag) => (deleteFlag ? <Badge status="success" /> : <Badge status="default" />)
     },
     {
@@ -364,6 +414,10 @@ export default function User(): React.JSX.Element {
             disabled={!selectedRowKey}
             icon={<EditOutlined />}
             onClick={() => {
+              if (selectRowItem?.id === userId) {
+                message.warning(t('cannotUpdateYourself'))
+                return
+              }
               setAvatarPath(selectRowItem?.avatarPath ?? '')
               setUpdateModalOpen(true)
             }}
@@ -383,13 +437,29 @@ export default function User(): React.JSX.Element {
             disabled={!selectedRowKey}
             icon={<DeleteOutlined />}
             onClick={() => {
+              if (selectRowItem?.id === userId) {
+                message.warning(t('cannotDeleteYourself'))
+                return
+              }
               deleteUserMutation.mutate(selectedRowKey)
             }}
           />
         </Tooltip>
 
         <div>
-          {pageIndex + ',' + pageSize + ',' + sortField + ',' + sortOrder + ',' + selectedRowKey}
+          {pageIndex +
+            ',' +
+            pageSize +
+            ',' +
+            sortField +
+            ',' +
+            sortOrder +
+            ',' +
+            selectedRowKey +
+            ',' +
+            searchColumn +
+            ',' +
+            searchText}
         </div>
       </div>
       <Table<UserAdminResponse>
@@ -411,7 +481,7 @@ export default function User(): React.JSX.Element {
           },
           footer: 'flex items-center justify-center'
         }}
-        onChange={(_, sorter) => {
+        onChange={(_, __, sorter) => {
           const s = sorter as SorterResult<UserAdminResponse>
           setSortField((s.field ?? 'id').toString())
           setSortOrder(orderMap[s.order ?? 'ascend'])
