@@ -54,12 +54,8 @@ export default function ProfileModal({ open, onCancel }: ProfileModalProps): Rea
 
   const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
     mutation.mutate({
-      username: values.username,
-      gender: values.gender,
+      ...values,
       birthday: values.birthday?.format('YYYY-MM-DD') ?? undefined,
-      avatarPath: values.avatarPath,
-      occupation: values.occupation,
-      detail: values.detail,
       version: version!
     })
   }

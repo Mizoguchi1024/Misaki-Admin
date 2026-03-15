@@ -41,6 +41,7 @@ import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Highlighter from 'react-highlight-words'
 import { getProfile } from '@/api/front/user'
+import dayjs from 'dayjs'
 
 const orderMap = {
   ascend: 'asc',
@@ -86,7 +87,6 @@ export default function User(): React.JSX.Element {
     mutationFn: createUser,
     onSuccess: () => {
       message.success(t('userCreated'))
-      setAvatarPath('')
       setCreateModalOpen(false)
       queryClient.invalidateQueries({ queryKey: ['users'] })
     }
@@ -100,7 +100,6 @@ export default function User(): React.JSX.Element {
     mutationFn: ({ id, data }) => updateUser(id, data),
     onSuccess: () => {
       message.success(t('userUpdated'))
-      setAvatarPath('')
       setUpdateModalOpen(false)
       queryClient.invalidateQueries({ queryKey: ['users'] })
     }
@@ -138,16 +137,16 @@ export default function User(): React.JSX.Element {
 
   const getColumnSearchProps = (dataIndex: DataIndex): TableColumnType<UserAdminResponse> => ({
     filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
-      <div className="p-2" onKeyDown={(e) => e.stopPropagation()}>
+      <div className="p-2 flex flex-col items-center" onKeyDown={(e) => e.stopPropagation()}>
         <Input
           ref={searchInput}
           placeholder={t('searchField', { field: t(dataIndex) })}
           value={selectedKeys[0]}
           onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
           onPressEnter={() => handleSearch(selectedKeys as string[], confirm, dataIndex)}
-          className="block mb-2"
+          className="block mb-2 field-sizing-content"
         />
-        <div className="flex justify-between">
+        <div className="w-full flex justify-between gap-2">
           <Button
             onClick={() => {
               clearFilters?.()
@@ -201,7 +200,7 @@ export default function User(): React.JSX.Element {
     filterItems: ColumnFilterItem[]
   ): TableColumnType<UserAdminResponse> => ({
     filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
-      <div className="p-2" onKeyDown={(e) => e.stopPropagation()}>
+      <div className="p-2 flex flex-col items-center" onKeyDown={(e) => e.stopPropagation()}>
         <Radio.Group
           optionType="button"
           buttonStyle="solid"
@@ -210,10 +209,12 @@ export default function User(): React.JSX.Element {
           className="mb-2"
         >
           {filterItems.map((item) => (
-            <Radio value={item.value}>{item.text}</Radio>
+            <Radio key={item.value.toString()} value={item.value}>
+              {item.text}
+            </Radio>
           ))}
         </Radio.Group>
-        <div className="flex justify-between">
+        <div className="w-full flex justify-between gap-2">
           <Button
             onClick={() => {
               clearFilters?.()
@@ -247,6 +248,7 @@ export default function User(): React.JSX.Element {
     {
       title: t('id'),
       dataIndex: 'id',
+      ellipsis: true,
       sorter: true,
       ...getColumnSearchProps('id')
     },
@@ -362,7 +364,7 @@ export default function User(): React.JSX.Element {
   ]
 
   return (
-    <div className="h-full w-full flex flex-col items-center gap-4 py-4 px-8 overflow-x-hidden overflow-y-auto scrollbar-style">
+    <div className="h-full w-full flex flex-col items-center gap-4 py-4 px-8">
       <div className="flex items-center justify-start gap-4">
         <Tooltip
           title={t('refresh')}
@@ -462,31 +464,31 @@ export default function User(): React.JSX.Element {
             searchText}
         </div>
       </div>
-      <Table<UserAdminResponse>
-        rowKey="id"
-        columns={columns}
-        dataSource={list}
-        loading={isLoading}
-        scroll={{ y: 600 }}
-        rowSelection={{
-          type: 'radio',
-          selectedRowKeys: [selectedRowKey],
-          onChange: (selectedRowKeys) => setSelectedRowKey(selectedRowKeys[0].toString())
-        }}
-        pagination={false}
-        className="flex-1"
-        classNames={{
-          header: {
-            cell: 'select-none'
-          },
-          footer: 'flex items-center justify-center'
-        }}
-        onChange={(_, __, sorter) => {
-          const s = sorter as SorterResult<UserAdminResponse>
-          setSortField((s.field ?? 'id').toString())
-          setSortOrder(orderMap[s.order ?? 'ascend'])
-        }}
-      />
+      <div className="flex-1 overflow-y-auto scrollbar-style">
+        <Table<UserAdminResponse>
+          rowKey="id"
+          columns={columns}
+          dataSource={list}
+          loading={isLoading}
+          rowSelection={{
+            type: 'radio',
+            selectedRowKeys: [selectedRowKey],
+            onChange: (selectedRowKeys) => setSelectedRowKey(selectedRowKeys[0].toString())
+          }}
+          pagination={false}
+          onChange={(_, __, sorter) => {
+            const s = sorter as SorterResult<UserAdminResponse>
+            setSortField((s.field ?? 'id').toString())
+            setSortOrder(orderMap[s.order ?? 'ascend'])
+          }}
+          classNames={{
+            header: {
+              wrapper: 'sticky top-0 z-10',
+              cell: 'select-none'
+            }
+          }}
+        />
+      </div>
       <Pagination
         current={pageIndex}
         onChange={(page, pageSize) => {
@@ -509,7 +511,10 @@ export default function User(): React.JSX.Element {
       <Modal
         title={t('create')}
         open={createModalOpen}
-        onCancel={() => setCreateModalOpen(false)}
+        onCancel={() => {
+          setCreateModalOpen(false)
+          setAvatarPath('')
+        }}
         centered
         destroyOnHidden
         footer={null}
@@ -529,7 +534,11 @@ export default function User(): React.JSX.Element {
             className="w-full"
             validateMessages={{ required: t('requiredTemplate', { label: '${label}' }) }}
             onFinish={async (values) => {
-              createUserMutation.mutate({ ...values, avatarPath: avatarPath || undefined })
+              createUserMutation.mutate({
+                ...values,
+                avatarPath: avatarPath || undefined,
+                birthday: values.birthday?.format('YYYY-MM-DD') ?? undefined
+              })
             }}
           >
             <Form.Item
@@ -569,7 +578,11 @@ export default function User(): React.JSX.Element {
               />
             </Form.Item>
             <Form.Item name="birthday" label={t('birthday')}>
-              <DatePicker />
+              <DatePicker
+                placeholder={t('birthday')}
+                form="YYYY-MM-DD"
+                disabledDate={(current) => current && current > dayjs().endOf('day')}
+              />
             </Form.Item>
             <Form.Item name="occupation" label={t('occupation')}>
               <Input />
@@ -586,7 +599,10 @@ export default function User(): React.JSX.Element {
       <Modal
         title={t('update')}
         open={updateModalOpen}
-        onCancel={() => setUpdateModalOpen(false)}
+        onCancel={() => {
+          setUpdateModalOpen(false)
+          setAvatarPath('')
+        }}
         centered
         destroyOnHidden
         footer={null}
@@ -608,9 +624,10 @@ export default function User(): React.JSX.Element {
               updateUserMutation.mutate({
                 id: selectedRowKey,
                 data: {
-                  ...selectRowItem,
                   ...values,
-                  avatarPath: avatarPath || undefined
+                  avatarPath: avatarPath || undefined,
+                  birthday: values.birthday?.format('YYYY-MM-DD') ?? undefined,
+                  version: selectRowItem?.version
                 }
               })
             }}
@@ -661,8 +678,16 @@ export default function User(): React.JSX.Element {
                 ]}
               />
             </Form.Item>
-            <Form.Item name="birthday" label={t('birthday')}>
-              <DatePicker />
+            <Form.Item
+              name="birthday"
+              label={t('birthday')}
+              initialValue={selectRowItem?.birthday && dayjs(selectRowItem.birthday)}
+            >
+              <DatePicker
+                placeholder={t('birthday')}
+                form="YYYY-MM-DD"
+                disabledDate={(current) => current && current > dayjs().endOf('day')}
+              />
             </Form.Item>
             <Form.Item
               name="occupation"
