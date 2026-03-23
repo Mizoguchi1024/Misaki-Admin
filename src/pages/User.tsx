@@ -22,7 +22,6 @@ import {
   Badge,
   Button,
   DatePicker,
-  Empty,
   Form,
   Input,
   InputNumber,
@@ -453,7 +452,6 @@ export default function User(): React.JSX.Element {
             ',' +
             searchText}
         </div>
-        <Empty/>
       </div>
       <div className="flex-1 overflow-y-auto scrollbar-style">
         <Table<UserAdminResponse>

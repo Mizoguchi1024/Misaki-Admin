@@ -30,7 +30,7 @@ export default function Login() {
       message.success(t('loginSuccess'))
       navigate('/workspace', { viewTransition: true })
     }
-  }, [jwt])
+  }, [])
 
   return (
     <div className="h-full w-full flex flex-col items-center justify-center gap-24">
@@ -55,6 +55,8 @@ export default function Login() {
               setSubmitButtonLoading(false)
               setRememberMe(values.rememberMe)
               setAuthInfo(loginRes.data)
+              message.success(t('loginSuccess'))
+              navigate('/workspace', { viewTransition: true })
             } catch {
               setTimeout(() => {
                 setSubmitButtonLoading(false)
