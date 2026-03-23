@@ -22,6 +22,7 @@ import {
   Badge,
   Button,
   DatePicker,
+  Empty,
   Form,
   Input,
   InputNumber,
@@ -131,8 +132,8 @@ export default function User(): React.JSX.Element {
     dataIndex: DataIndex
   ) => {
     confirm()
-    setSearchText(selectedKeys[0])
     setSearchColumn(dataIndex)
+    setSearchText(selectedKeys[0])
   }
 
   const getColumnSearchProps = (dataIndex: DataIndex): TableColumnType<UserAdminResponse> => ({
@@ -170,11 +171,6 @@ export default function User(): React.JSX.Element {
     filterIcon: (filtered: boolean) => (
       <SearchOutlined style={{ color: filtered ? '#3142EF' : undefined }} />
     ),
-    onFilter: (value, record) =>
-      record[dataIndex]
-        .toString()
-        .toLowerCase()
-        .includes((value as string).toLowerCase()),
     filterDropdownProps: {
       onOpenChange(open) {
         if (open) {
@@ -235,11 +231,6 @@ export default function User(): React.JSX.Element {
         </div>
       </div>
     ),
-    onFilter: (value) => {
-      setSearchColumn(dataIndex)
-      setSearchText(value as string)
-      return true
-    },
     filterMultiple: false,
     filters: filterItems
   })
@@ -447,7 +438,6 @@ export default function User(): React.JSX.Element {
             }}
           />
         </Tooltip>
-
         <div>
           {pageIndex +
             ',' +
@@ -463,6 +453,7 @@ export default function User(): React.JSX.Element {
             ',' +
             searchText}
         </div>
+        <Empty/>
       </div>
       <div className="flex-1 overflow-y-auto scrollbar-style">
         <Table<UserAdminResponse>
@@ -496,7 +487,7 @@ export default function User(): React.JSX.Element {
           setPageSize(pageSize)
         }}
         pageSize={pageSize}
-        total={+(total ?? '0')}
+        total={total}
         showTotal={(total, range) => `${range[0]}-${range[1]} / ${total}`}
         showSizeChanger={{
           options: [
@@ -580,7 +571,7 @@ export default function User(): React.JSX.Element {
             <Form.Item name="birthday" label={t('birthday')}>
               <DatePicker
                 placeholder={t('birthday')}
-                form="YYYY-MM-DD"
+                format="YYYY-MM-DD"
                 disabledDate={(current) => current && current > dayjs().endOf('day')}
               />
             </Form.Item>
@@ -620,6 +611,10 @@ export default function User(): React.JSX.Element {
             wrapperCol={{ span: 18 }}
             labelAlign="left"
             className="w-full"
+            initialValues={{
+              ...selectRowItem,
+              birthday: selectRowItem?.birthday ? dayjs(selectRowItem.birthday) : undefined
+            }}
             onFinish={async (values) => {
               updateUserMutation.mutate({
                 id: selectedRowKey,
@@ -632,12 +627,7 @@ export default function User(): React.JSX.Element {
               })
             }}
           >
-            <Form.Item
-              name="authRole"
-              label={t('authRole')}
-              initialValue={selectRowItem?.authRole}
-              rules={[{ required: true }]}
-            >
+            <Form.Item name="authRole" label={t('authRole')} rules={[{ required: true }]}>
               <Select
                 options={[
                   { value: 0, label: t('user') },
@@ -645,31 +635,16 @@ export default function User(): React.JSX.Element {
                 ]}
               />
             </Form.Item>
-            <Form.Item
-              name="email"
-              label={t('email')}
-              initialValue={selectRowItem?.email}
-              rules={[{ required: true }]}
-            >
+            <Form.Item name="email" label={t('email')} rules={[{ required: true }]}>
               <Input />
             </Form.Item>
-            <Form.Item
-              name="username"
-              label={t('username')}
-              initialValue={selectRowItem?.username}
-              rules={[{ required: true }]}
-            >
+            <Form.Item name="username" label={t('username')} rules={[{ required: true }]}>
               <Input />
             </Form.Item>
             <Form.Item name="password" label={t('password')}>
               <Input.Password placeholder={t('newPassword')} />
             </Form.Item>
-            <Form.Item
-              name="gender"
-              label={t('gender')}
-              initialValue={selectRowItem?.gender}
-              rules={[{ required: true }]}
-            >
+            <Form.Item name="gender" label={t('gender')} rules={[{ required: true }]}>
               <Select
                 options={[
                   { value: 0, label: t('unknown') },
@@ -678,41 +653,26 @@ export default function User(): React.JSX.Element {
                 ]}
               />
             </Form.Item>
-            <Form.Item
-              name="birthday"
-              label={t('birthday')}
-              initialValue={selectRowItem?.birthday && dayjs(selectRowItem.birthday)}
-            >
+            <Form.Item name="birthday" label={t('birthday')}>
               <DatePicker
                 placeholder={t('birthday')}
-                form="YYYY-MM-DD"
+                format="YYYY-MM-DD"
                 disabledDate={(current) => current && current > dayjs().endOf('day')}
               />
             </Form.Item>
-            <Form.Item
-              name="occupation"
-              label={t('occupation')}
-              initialValue={selectRowItem?.occupation}
-            >
+            <Form.Item name="occupation" label={t('occupation')}>
               <Input />
             </Form.Item>
-            <Form.Item name="detail" label={t('detail')} initialValue={selectRowItem?.detail}>
+            <Form.Item name="detail" label={t('detail')}>
               <Input.TextArea />
             </Form.Item>
             <div className="flex justify-between">
-              <Form.Item
-                name="token"
-                label={t('token')}
-                initialValue={selectRowItem?.token}
-                layout="vertical"
-                labelCol={{ span: 24 }}
-              >
+              <Form.Item name="token" label={t('token')} layout="vertical" labelCol={{ span: 24 }}>
                 <InputNumber />
               </Form.Item>
               <Form.Item
                 name="crystal"
                 label={t('crystal')}
-                initialValue={selectRowItem?.crystal}
                 layout="vertical"
                 labelCol={{ span: 24 }}
               >
@@ -721,7 +681,6 @@ export default function User(): React.JSX.Element {
               <Form.Item
                 name="puzzle"
                 label={t('puzzle')}
-                initialValue={selectRowItem?.puzzle}
                 layout="vertical"
                 labelCol={{ span: 24 }}
               >
@@ -730,25 +689,16 @@ export default function User(): React.JSX.Element {
               <Form.Item
                 name="stardust"
                 label={t('stardust')}
-                initialValue={selectRowItem?.stardust}
                 layout="vertical"
                 labelCol={{ span: 24 }}
               >
                 <InputNumber />
               </Form.Item>
             </div>
-            <Form.Item
-              name="deletePendingFlag"
-              label={t('deletePendingFlag')}
-              initialValue={selectRowItem?.deletePendingFlag}
-            >
+            <Form.Item name="deletePendingFlag" label={t('deletePendingFlag')}>
               <Switch />
             </Form.Item>
-            <Form.Item
-              name="deleteFlag"
-              label={t('deleteFlag')}
-              initialValue={selectRowItem?.deleteFlag}
-            >
+            <Form.Item name="deleteFlag" label={t('deleteFlag')}>
               <Switch />
             </Form.Item>
             <Button type="primary" htmlType="submit" block>

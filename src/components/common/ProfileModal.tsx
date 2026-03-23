@@ -14,10 +14,10 @@ type ProfileModalProps = {
 type FieldType = {
   username: string
   gender: number
-  birthday: dayjs.Dayjs
-  avatarPath: string
-  occupation: string
-  detail: string
+  birthday?: dayjs.Dayjs
+  avatarPath?: string
+  occupation?: string
+  detail?: string
 }
 
 export default function ProfileModal({ open, onCancel }: ProfileModalProps): React.JSX.Element {
@@ -93,7 +93,7 @@ export default function ProfileModal({ open, onCancel }: ProfileModalProps): Rea
             labelAlign="left"
             requiredMark={false}
             onFinish={onFinish}
-            validateMessages={{ required: t('requiredTemplate') }}
+            validateMessages={{ required: t('requiredTemplate', { label: '${label}' }) }}
             className="w-full"
           >
             <Form.Item name="id" label={t('id')}>
