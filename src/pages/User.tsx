@@ -16,7 +16,7 @@ import {
   SearchOutlined,
   UserOutlined
 } from '@ant-design/icons'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   App,
   Avatar,
@@ -72,7 +72,8 @@ export default function User(): React.JSX.Element {
     queryFn: () =>
       searchUsers(pageIndex, pageSize, sortField, sortOrder, {
         [searchColumn]: searchText
-      } as SearchUserAdminRequest)
+      } as SearchUserAdminRequest),
+    placeholderData: keepPreviousData
   })
 
   const { list, total } = data?.data ?? {}
@@ -439,21 +440,6 @@ export default function User(): React.JSX.Element {
             }}
           />
         </Tooltip>
-        <div>
-          {pageIndex +
-            ',' +
-            pageSize +
-            ',' +
-            sortField +
-            ',' +
-            sortOrder +
-            ',' +
-            selectedRowKey +
-            ',' +
-            searchColumn +
-            ',' +
-            searchText}
-        </div>
       </div>
       <div className="flex-1 overflow-y-auto scrollbar-style">
         <Table<UserAdminResponse>
@@ -490,12 +476,6 @@ export default function User(): React.JSX.Element {
         total={total}
         showTotal={(total, range) => `${range[0]}-${range[1]} / ${total}`}
         showSizeChanger={{
-          options: [
-            { value: 10, label: 10 },
-            { value: 20, label: 20 },
-            { value: 50, label: 50 },
-            { value: 100, label: 100 }
-          ],
           showSearch: false
         }}
       />

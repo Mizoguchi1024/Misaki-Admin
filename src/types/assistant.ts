@@ -1,9 +1,9 @@
 export type AddAssistantAdminRequest = {
   name: string
-  personality?: string
-  detail?: string
   gender: number
   birthday?: string
+  personality?: string
+  detail?: string
   modelId: string
   creatorId: string
   ownerId: string
@@ -29,10 +29,10 @@ export type SearchAssistantAdminRequest = {
 export type AssistantAdminResponse = {
   id: string
   name: string
-  personality: string
-  detail: string
   gender: number
   birthday: string
+  personality: string
+  detail: string
   modelId: string
   creatorId: string
   ownerId: string
@@ -45,10 +45,10 @@ export type AssistantAdminResponse = {
 
 export type UpdateAssistantAdminRequest = {
   name?: string
-  personality?: string
-  detail?: string
   gender?: number
   birthday?: string
+  personality?: string
+  detail?: string
   modelId?: number
   creatorId?: number
   ownerId?: number

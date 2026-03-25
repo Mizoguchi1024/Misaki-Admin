@@ -1,7 +1,7 @@
 import { App, Layout, Menu, type MenuProps } from 'antd'
 import { useEffect, useState } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
-import {
+import Icon, {
   ClockCircleOutlined,
   HeartOutlined,
   MessageOutlined,
@@ -50,7 +50,7 @@ export default function MainLayout(): React.JSX.Element {
     {
       key: '/mcp',
       label: t('mcp'),
-      icon: <McpLogo className="w-3.5" />
+      icon: <Icon component={McpLogo} />
     },
     {
       key: '/user',

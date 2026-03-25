@@ -2,6 +2,7 @@ export type SearchChatAdminRequest = {
   id?: string
   userId?: string
   title?: string
+  pinnedFlag?: boolean
   deleteFlag?: boolean
   createTime?: string
   updateTime?: string
@@ -12,6 +13,7 @@ export type ChatAdminResponse = {
   userId: string
   title: string
   token: number
+  pinnedFlag: boolean
   deleteFlag: boolean
   createTime: string
   updateTime: string
@@ -20,7 +22,7 @@ export type ChatAdminResponse = {
 
 export type UpdateChatAdminRequest = {
   title?: string
-  token?: number
+  pinnedFlag?: boolean
   deleteFlag?: boolean
   version: number
 }
