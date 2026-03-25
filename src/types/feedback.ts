@@ -30,8 +30,6 @@ export type FeedbackAdminResponse = {
 export type UpdateFeedbackAdminRequest = {
   replierId?: string
   type?: number
-  title?: string
-  content?: string
   reply?: string
   status?: number
   deleteFlag?: boolean
