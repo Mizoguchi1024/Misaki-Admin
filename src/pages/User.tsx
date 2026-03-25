@@ -10,6 +10,7 @@ import type {
 import {
   DeleteOutlined,
   EditOutlined,
+  LoadingOutlined,
   PlusOutlined,
   ReloadOutlined,
   SearchOutlined,
@@ -65,7 +66,8 @@ export default function User(): React.JSX.Element {
   const [updateModalOpen, setUpdateModalOpen] = useState(false)
   const [avatarPath, setAvatarPath] = useState('')
   const queryClient = useQueryClient()
-  const { data, isLoading, refetch } = useQuery({
+
+  const { data, isFetching, refetch } = useQuery({
     queryKey: ['users', pageIndex, pageSize, sortField, sortOrder, searchColumn, searchText],
     queryFn: () =>
       searchUsers(pageIndex, pageSize, sortField, sortOrder, {
@@ -458,7 +460,7 @@ export default function User(): React.JSX.Element {
           rowKey="id"
           columns={columns}
           dataSource={list}
-          loading={isLoading}
+          loading={{ spinning: isFetching, indicator: <LoadingOutlined spin /> }}
           rowSelection={{
             type: 'radio',
             selectedRowKeys: [selectedRowKey],
