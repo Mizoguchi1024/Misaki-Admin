@@ -13,6 +13,7 @@ export type SearchModelAdminRequest = {
   grade?: number
   price?: number
   createTime?: string
+  updateTime?: string
 }
 
 export type ModelAdminResponse = {
@@ -24,6 +25,7 @@ export type ModelAdminResponse = {
   avatarPath: string
   onSaleFlag: boolean
   createTime: string
+  updateTime: string
   version: number
 }
 
