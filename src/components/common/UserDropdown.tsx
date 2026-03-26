@@ -9,7 +9,6 @@ import { useTranslation } from 'react-i18next'
 import AboutModal from './AboutModal'
 import SettingsModal from './SettingsModal'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useUserStore } from '@/store/user'
 import { useQuery } from '@tanstack/react-query'
 import { getProfile } from '@/api/front/user'
@@ -17,8 +16,7 @@ import ProfileModal from './ProfileModal'
 
 export default function UserDropdown(): React.JSX.Element {
   const { t } = useTranslation('userDropdown')
-  const navigate = useNavigate()
-  const { reset: resetUserStore } = useUserStore()
+  const { logout } = useUserStore()
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false)
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false)
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false)
@@ -69,8 +67,7 @@ export default function UserDropdown(): React.JSX.Element {
         setIsAboutModalOpen(true)
         break
       case 'logout':
-        resetUserStore()
-        navigate('/', { viewTransition: true })
+        logout()
         break
     }
   }

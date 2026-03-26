@@ -1,6 +1,7 @@
 import { deleteAccount } from '@/api/front/user'
 import { LanguageMap, useSettingsStore } from '@/store/settings'
 import { useUserStore } from '@/store/user'
+import { useMutation } from '@tanstack/react-query'
 import { Button, Modal, Segmented, Select, Slider, Tabs } from 'antd'
 import { useTranslation } from 'react-i18next'
 
@@ -11,9 +12,14 @@ type SettingsModalProps = {
 
 export default function SettingsModal({ open, onCancel }: SettingsModalProps): React.JSX.Element {
   const { t } = useTranslation('settingsModal')
-  const { jwt } = useUserStore()
+  const { jwt, logout } = useUserStore()
   const { language, fontSize, appearance, borderRadius, setPartial, resetLocalSettings } =
     useSettingsStore()
+
+  const deleteAccountMutation = useMutation({
+    mutationFn: deleteAccount,
+    onSuccess: () => logout()
+  })
 
   const tabItems = [
     {
@@ -99,13 +105,7 @@ export default function SettingsModal({ open, onCancel }: SettingsModalProps): R
           {jwt && (
             <div className="flex justify-between items-center min-h-8 flex-none">
               <span>{t('deleteAccount')}</span>
-              <Button
-                danger
-                onClick={async () => {
-                  await deleteAccount()
-                  // TODO Logout
-                }}
-              >
+              <Button danger onClick={() => deleteAccountMutation.mutate()}>
                 {t('delete')}
               </Button>
             </div>

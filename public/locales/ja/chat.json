@@ -1,0 +1,23 @@
+{
+  "id": "ID",
+  "userId": "ユーザーID",
+  "title": "タイトル",
+  "token": "トークン",
+  "pinnedFlag": "固定済み",
+  "deleteFlag": "削除済み",
+  "createTime": "作成日時",
+  "updateTime": "更新日時",
+  "false": "いいえ",
+  "true": "はい",
+  "refresh": "更新",
+  "update": "変更",
+  "delete": "削除",
+  "refreshed": "更新しました",
+  "chatUpdated": "チャットを変更しました",
+  "chatDeleted": "チャットを削除しました",
+  "requiredTemplate": "{{label}}を入力してください",
+  "searchField": "{{field}}を検索",
+  "search": "検索",
+  "filter": "絞り込み",
+  "clear": "クリア"
+}

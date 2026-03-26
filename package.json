@@ -1,8 +1,7 @@
 {
   "name": "misaki-admin",
   "private": true,
-  "version": "1.0.0 Dev",
-  "type": "module",
+  "version": "1.0.0",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

@@ -1,0 +1,9 @@
+{
+  "admin": "管理画面",
+  "email": "メールアドレス",
+  "password": "パスワード",
+  "rememberMe": "ログイン状態を保持",
+  "forgotPassword": "パスワードを忘れた場合",
+  "login": "ログイン",
+  "loginSuccess": "ログインしました"
+}

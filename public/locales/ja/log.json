@@ -1,0 +1,23 @@
+{
+  "id": "ID",
+  "sender": "送信者",
+  "receiver": "受信者",
+  "subject": "件名",
+  "createTime": "作成日時",
+  "exception": "例外",
+  "message": "メッセージ",
+  "ip": "IP",
+  "uri": "URI",
+  "method": "メソッド",
+  "deleteBeforeDate": "この日付以前のログを削除",
+  "refresh": "更新",
+  "refreshed": "更新しました",
+  "emailLog": "メールログ",
+  "exceptionLog": "例外ログ",
+  "emailLogsDeleted": "メールログを削除しました",
+  "exceptionLogsDeleted": "例外ログを削除しました",
+  "searchField": "{{field}}を検索",
+  "search": "検索",
+  "filter": "絞り込み",
+  "clear": "クリア"
+}

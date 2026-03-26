@@ -1,0 +1,15 @@
+{
+  "settings": "設定",
+  "general": "一般",
+  "language": "言語",
+  "appearance": "外観",
+  "auto": "自動",
+  "light": "ライト",
+  "dark": "ダーク",
+  "fontSize": "文字サイズ",
+  "borderRadius": "角丸半径",
+  "resetSettings": "設定をリセット",
+  "reset": "リセット",
+  "deleteAccount": "アカウントを削除",
+  "delete": "削除"
+}

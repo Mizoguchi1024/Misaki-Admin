@@ -2,9 +2,8 @@ import { App as AntdApp, ConfigProvider, theme } from 'antd'
 import { StyleProvider } from '@ant-design/cssinjs'
 import { LanguageAntdMap, useSettingsStore } from './store/settings'
 import { useEffect } from 'react'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-
-const queryClient = new QueryClient()
+import { QueryClientProvider } from '@tanstack/react-query'
+import { queryClient } from './queryClient'
 
 export default function App({ children }: { children?: React.ReactNode }): React.JSX.Element {
   const { appearance, fontSize, borderRadius, language } = useSettingsStore()

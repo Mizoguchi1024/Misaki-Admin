@@ -1,0 +1,19 @@
+{
+  "profile": "プロフィール",
+  "uploadSuccess": "アップロードしました",
+  "profileSaved": "プロフィールを保存しました",
+  "requiredTemplate": "{{label}}を入力してください",
+  "id": "ID",
+  "email": "メールアドレス",
+  "username": "ユーザー名",
+  "gender": "性別",
+  "unknown": "非公開",
+  "male": "男性",
+  "female": "女性",
+  "birthday": "誕生日",
+  "avatar": "アバター",
+  "occupation": "職業",
+  "detail": "紹介",
+  "createTime": "作成日時",
+  "save": "保存"
+}

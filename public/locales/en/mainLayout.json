@@ -1,0 +1,10 @@
+{
+  "workspace": "Workspace",
+  "mcp": "MCP",
+  "user": "User",
+  "assistant": "Assistant",
+  "model": "Model",
+  "chat": "Chat",
+  "feedback": "Feedback",
+  "log": "Log"
+}

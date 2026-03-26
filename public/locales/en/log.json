@@ -1,0 +1,23 @@
+{
+  "id": "ID",
+  "sender": "Sender",
+  "receiver": "Receiver",
+  "subject": "Subject",
+  "createTime": "Created At",
+  "exception": "Exception",
+  "message": "Message",
+  "ip": "IP",
+  "uri": "URI",
+  "method": "Method",
+  "deleteBeforeDate": "Delete logs on or before this date",
+  "refresh": "Refresh",
+  "refreshed": "Refreshed",
+  "emailLog": "Email Logs",
+  "exceptionLog": "Exception Logs",
+  "emailLogsDeleted": "Email logs deleted",
+  "exceptionLogsDeleted": "Exception logs deleted",
+  "searchField": "Search {{field}}",
+  "search": "Search",
+  "filter": "Filter",
+  "clear": "Clear"
+}

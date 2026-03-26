@@ -1,0 +1,23 @@
+{
+  "id": "ID",
+  "userId": "User ID",
+  "title": "Title",
+  "token": "Token",
+  "pinnedFlag": "Pinned",
+  "deleteFlag": "Deleted",
+  "createTime": "Created At",
+  "updateTime": "Updated At",
+  "false": "False",
+  "true": "True",
+  "refresh": "Refresh",
+  "update": "Update",
+  "delete": "Delete",
+  "refreshed": "Refreshed",
+  "chatUpdated": "Chat updated",
+  "chatDeleted": "Chat deleted",
+  "requiredTemplate": "Please enter {{label}}",
+  "searchField": "Search {{field}}",
+  "search": "Search",
+  "filter": "Filter",
+  "clear": "Clear"
+}

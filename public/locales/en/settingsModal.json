@@ -1,0 +1,15 @@
+{
+  "settings": "Settings",
+  "general": "General",
+  "language": "Language",
+  "appearance": "Appearance",
+  "auto": "Auto",
+  "light": "Light",
+  "dark": "Dark",
+  "fontSize": "Font Size",
+  "borderRadius": "Border Radius",
+  "resetSettings": "Reset Settings",
+  "reset": "Reset",
+  "deleteAccount": "Delete Account",
+  "delete": "Delete"
+}

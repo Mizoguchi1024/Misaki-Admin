@@ -1,0 +1,9 @@
+{
+  "admin": "Admin",
+  "email": "Email",
+  "password": "Password",
+  "rememberMe": "Remember me",
+  "forgotPassword": "Forgot password",
+  "login": "Log in",
+  "loginSuccess": "Logged in successfully"
+}
