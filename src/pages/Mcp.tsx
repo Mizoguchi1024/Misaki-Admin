@@ -53,7 +53,6 @@ export default function Mcp(): React.JSX.Element {
       <Button
         variant="filled"
         color="default"
-        shape="circle"
         icon={<ReloadOutlined />}
         onClick={() => refetch().then(() => message.success(t('refreshed')))}
       >
