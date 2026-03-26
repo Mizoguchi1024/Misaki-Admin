@@ -10,14 +10,6 @@ export default defineConfig({
   define: {
     __APP_VERSION__: JSON.stringify(pkg.version)
   },
-  server: {
-    proxy: {
-      '/api': {
-        target: 'http://localhost:8080',
-        changeOrigin: true
-      }
-    }
-  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src')

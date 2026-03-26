@@ -13,7 +13,7 @@ i18n
     fallbackLng: 'zh',
     lng: language,
     backend: {
-      loadPath: '/locales/{{lng}}/{{ns}}.json'
+      loadPath: './locales/{{lng}}/{{ns}}.json'
     },
     interpolation: {
       escapeValue: false
