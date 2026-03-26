@@ -42,7 +42,7 @@ export default function Login() {
         <Divider vertical className="h-full mx-8" />
         <span className="font-normal">{t('admin')}</span>
       </div>
-      <GlassBox className="px-12 py-10">
+      <GlassBox className="px-12 py-10 w-90">
         <Form
           variant="filled"
           onFinish={async (values) => {

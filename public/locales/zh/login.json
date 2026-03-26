@@ -1,9 +1,13 @@
 {
-    "admin":"后台",
-    "email":"邮箱",
-    "password":"密码",
-    "rememberMe":"记住我",
-    "forgotPassword":"忘记密码",
-    "login":"登录",
+    "admin": "后台",
+    "email": "邮箱",
+    "emailRequiredMessage": "请输入邮箱",
+    "emailTypeMessage": "请输入正确的邮箱格式",
+    "password": "密码",
+    "passwordRequiredMessage": "请输入密码",
+    "passwordTypeMessage": "密码长度应在6-20个字符之间",
+    "rememberMe": "记住我",
+    "forgotPassword": "忘记密码",
+    "login": "登录",
     "loginSuccess": "登录成功"
 }

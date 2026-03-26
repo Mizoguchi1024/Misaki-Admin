@@ -8,6 +8,7 @@ import Login from '@/pages/Login'
 import Mcp from '@/pages/Mcp'
 import Model from '@/pages/Model'
 import NotFound from '@/pages/NotFound'
+import ResetPassword from '@/pages/ResetPassword'
 import User from '@/pages/User'
 import Workspace from '@/pages/Workspace'
 import { createBrowserRouter } from 'react-router-dom'
@@ -30,7 +31,7 @@ export const router = createBrowserRouter([
     element: <AuthLayout />,
     children: [
       { index: true, element: <Login />, handle: { page: 'login' } },
-      // { path: '/reset-password', element: <ResetPassword />, handle: { page: 'reset-password' } },
+      { path: '/reset-password', element: <ResetPassword />, handle: { page: 'reset-password' } },
       { path: '*', element: <NotFound />, handle: { page: 'not-found' } }
     ]
   }

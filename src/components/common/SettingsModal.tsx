@@ -94,7 +94,8 @@ export default function SettingsModal({ open, onCancel }: SettingsModalProps): R
           <div className="flex justify-between items-center min-h-8 flex-none">
             <span>{t('resetSettings')}</span>
             <Button
-              danger
+              color="danger"
+              variant="filled"
               onClick={() => {
                 resetLocalSettings()
               }}
@@ -105,7 +106,11 @@ export default function SettingsModal({ open, onCancel }: SettingsModalProps): R
           {jwt && (
             <div className="flex justify-between items-center min-h-8 flex-none">
               <span>{t('deleteAccount')}</span>
-              <Button danger onClick={() => deleteAccountMutation.mutate()}>
+              <Button
+                color="danger"
+                variant="filled"
+                onClick={() => deleteAccountMutation.mutate()}
+              >
                 {t('delete')}
               </Button>
             </div>

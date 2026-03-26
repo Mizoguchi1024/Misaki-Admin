@@ -15,14 +15,14 @@ export default function MisakiButton(): React.JSX.Element {
       onClick={() => {
         if (jwt) {
           navigate('/workspace', { viewTransition: true })
+        } else {
+          navigate('/', { viewTransition: true })
         }
       }}
     >
       <div className="flex items-center gap-1">
         <MisakiLogo className="w-8" />
-        <span className='text-xl font-semibold'>
-          Misaki
-        </span>
+        <span className="text-xl font-semibold">Misaki</span>
       </div>
     </Button>
   )
