@@ -25,7 +25,7 @@ api.interceptors.response.use(
 
       if (serverCode === 40102) {
         if (useUserStore.getState().jwt) {
-          useUserStore.getState().reset()
+          useUserStore.getState().logout()
         }
       }
       useSettingsStore
