@@ -1,5 +1,5 @@
 {
-  "admin": "管理画面",
+  "admin": "Admin",
   "email": "メールアドレス",
   "emailRequiredMessage": "メールアドレスを入力してください",
   "emailTypeMessage": "正しいメールアドレス形式を入力してください",

@@ -32,18 +32,20 @@ export default function ResetPassword() {
   }
 
   return (
-    <div className="h-full w-full flex flex-col items-center justify-center gap-24">
-      <div className="flex items-center text-8xl select-none">
+    <div className="h-full w-full flex flex-col items-center justify-center gap-24 overflow-hidden">
+      <div className="flex items-center text-6xl lg:text-8xl ease-out duration-250 select-none">
         <div className="flex items-center gap-2">
-          <MisakiLogo className="w-32" />
+          <MisakiLogo className="w-24 lg:w-32 ease-out duration-250" />
           <span className="font-semibold">Misaki</span>
         </div>
         <Divider vertical className="h-full mx-8" />
         <span className="font-normal">{t('resetPassword')}</span>
       </div>
-      <GlassBox className="px-12 py-10 w-90">
+      <GlassBox className="px-12 py-10 w-110">
         <Form
           form={form}
+          validateTrigger="onFinish"
+          spellCheck={false}
           variant="filled"
           onFinish={async (values) => {
             try {
@@ -65,7 +67,7 @@ export default function ResetPassword() {
               { required: true, message: t('emailRequiredMessage') }
             ]}
           >
-            <Space.Compact>
+            <Space.Compact className='w-full'>
               <Input prefix={<MailOutlined />} placeholder={t('email')} spellCheck={false} />
               <Button
                 color="primary"
@@ -91,7 +93,7 @@ export default function ResetPassword() {
             name="verifyCode"
             rules={[{ required: true, message: t('verifyCodeRequiredMessage') }]}
           >
-            <Input.OTP  className="w-full justify-between"/>
+            <Input.OTP className="w-full justify-between" />
           </Form.Item>
           <Form.Item label={null} className="m-0">
             <Button type="primary" block htmlType="submit" loading={submitButtonLoading}>

@@ -33,17 +33,19 @@ export default function Login() {
   }, [])
 
   return (
-    <div className="h-full w-full flex flex-col items-center justify-center gap-24">
-      <div className="flex items-center text-8xl select-none">
+    <div className="h-full w-full flex flex-col items-center justify-center gap-24 overflow-hidden">
+      <div className="flex items-center text-6xl lg:text-8xl ease-out duration-250 select-none">
         <div className="flex items-center gap-2">
-          <MisakiLogo className="w-32" />
+          <MisakiLogo className="w-24 lg:w-32 ease-out duration-250" />
           <span className="font-semibold">Misaki</span>
         </div>
         <Divider vertical className="h-full mx-8" />
         <span className="font-normal">{t('admin')}</span>
       </div>
-      <GlassBox className="px-12 py-10 w-90">
+      <GlassBox className="px-12 py-10 w-110">
         <Form
+          validateTrigger="onFinish"
+          spellCheck={false}
           variant="filled"
           onFinish={async (values) => {
             try {

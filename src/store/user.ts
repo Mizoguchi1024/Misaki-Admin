@@ -31,7 +31,7 @@ export const useUserStore = create<UserState>()(
       logout: () => {
         router.navigate('/', { viewTransition: true })
         useUserStore.getState().reset()
-        queryClient.removeQueries()
+        queryClient.clear()
       },
       reset: () => set(initialState)
     }),

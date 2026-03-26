@@ -24,7 +24,7 @@ export default function AuthLayout(): React.JSX.Element {
       <Content>
         <Outlet />
       </Content>
-      <Footer className="absolute bottom-0 w-full bg-transparent text-center select-none">
+      <Footer inert className="bg-transparent text-center">
         Developed by Mizoguchi. All rights reserved.
       </Footer>
     </Layout>
