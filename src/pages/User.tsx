@@ -260,7 +260,7 @@ export default function User(): React.JSX.Element {
       dataIndex: 'avatarPath',
       render: (avatarPath) => (
         <Avatar
-          src={'http://localhost:9000' + avatarPath}
+          src={'/oss' + avatarPath}
           icon={<UserOutlined />}
           draggable={false}
           className="select-none"

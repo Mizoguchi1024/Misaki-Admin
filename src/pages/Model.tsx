@@ -228,7 +228,7 @@ export default function Model(): React.JSX.Element {
       dataIndex: 'avatarPath',
       render: (avatarPath) => (
         <Avatar
-          src={'http://localhost:9000' + avatarPath}
+          src={'/oss' + avatarPath}
           icon={<StarOutlined />}
           draggable={false}
           className="select-none"

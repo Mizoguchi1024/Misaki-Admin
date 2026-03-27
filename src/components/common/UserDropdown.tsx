@@ -86,7 +86,7 @@ export default function UserDropdown(): React.JSX.Element {
           <Button size="large" color="default" variant="filled">
             <Avatar
               size="small"
-              src={'http://www.localhost:9000' + avatarPath}
+              src={'/oss' + avatarPath}
               icon={<UserOutlined />}
               draggable={false}
             />

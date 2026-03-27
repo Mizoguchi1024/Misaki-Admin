@@ -59,7 +59,7 @@ export default function ImageUpload({ imgPath, onSuccess }: ImageUploadProps): R
       >
         {imgPath ? (
           <img
-            src={'http://www.localhost:9000' + imgPath}
+            src={'/oss' + imgPath}
             alt="avatar"
             draggable={false}
             className="w-full h-full object-cover"
