@@ -305,11 +305,11 @@ export default function User(): React.JSX.Element {
       ...getColumnSearchProps('occupation')
     },
     {
-      title: t('detail'),
-      dataIndex: 'detail',
+      title: t('details'),
+      dataIndex: 'details',
       ellipsis: true,
       sorter: true,
-      ...getColumnSearchProps('detail')
+      ...getColumnSearchProps('details')
     },
     {
       title: t('lastLoginTime'),
@@ -558,7 +558,7 @@ export default function User(): React.JSX.Element {
             <Form.Item name="occupation" label={t('occupation')}>
               <Input />
             </Form.Item>
-            <Form.Item name="detail" label={t('detail')}>
+            <Form.Item name="details" label={t('details')}>
               <Input.TextArea />
             </Form.Item>
             <Button type="primary" htmlType="submit" block>
@@ -643,7 +643,7 @@ export default function User(): React.JSX.Element {
             <Form.Item name="occupation" label={t('occupation')}>
               <Input />
             </Form.Item>
-            <Form.Item name="detail" label={t('detail')}>
+            <Form.Item name="details" label={t('details')}>
               <Input.TextArea />
             </Form.Item>
             <div className="flex justify-between">

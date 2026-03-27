@@ -4,7 +4,7 @@
   "gender": "Gender",
   "birthday": "Birthday",
   "personality": "Personality",
-  "detail": "Description",
+  "details": "Details",
   "modelId": "Model ID",
   "creatorId": "Creator ID",
   "ownerId": "Owner ID",

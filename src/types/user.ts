@@ -4,7 +4,7 @@ export type UpdateUserFrontRequest = {
   birthday?: string
   avatarPath?: string
   occupation?: string
-  detail?: string
+  details?: string
   version: number
 }
 
@@ -16,7 +16,7 @@ export type UserFrontResponse = {
   birthday: string
   avatarPath: string
   occupation: string
-  detail: string
+  details: string
   token: number
   crystal: number
   puzzle: number
@@ -36,7 +36,7 @@ export type AddUserAdminRequest = {
   birthday?: string
   avatarPath?: string
   occupation?: string
-  detail?: string
+  details?: string
 }
 
 export type SearchUserAdminRequest ={
@@ -47,7 +47,7 @@ export type SearchUserAdminRequest ={
   gender?: number
   birthday?: string
   occupation?: string
-  detail?: string
+  details?: string
   lastCheckInDate?: string
   lastLoginTime?: string
   deletePendingFlag?: boolean
@@ -64,7 +64,7 @@ export type UserAdminResponse = {
   birthday: string,
   avatarPath: string,
   occupation: string,
-  detail: string,
+  details: string,
   authRole: number,
   token: string,
   crystal: number,
@@ -87,7 +87,7 @@ export type UpdateUserAdminRequest ={
   birthday?: string
   avatarPath?: string
   occupation?: string
-  detail?: string
+  details?: string
   authRole?: number
   lastLoginTime?: string
   token?: number

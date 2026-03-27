@@ -262,11 +262,11 @@ export default function Assistant(): React.JSX.Element {
       ...getColumnSearchProps('personality')
     },
     {
-      title: t('detail'),
-      dataIndex: 'detail',
+      title: t('details'),
+      dataIndex: 'details',
       ellipsis: true,
       sorter: true,
-      ...getColumnSearchProps('detail')
+      ...getColumnSearchProps('details')
     },
     {
       title: t('modelId'),
@@ -483,7 +483,7 @@ export default function Assistant(): React.JSX.Element {
             <Form.Item name="personality" label={t('personality')}>
               <Input />
             </Form.Item>
-            <Form.Item name="detail" label={t('detail')}>
+            <Form.Item name="details" label={t('details')}>
               <Input.TextArea />
             </Form.Item>
             <Form.Item name="modelId" label={t('modelId')} rules={[{ required: true }]}>
@@ -556,7 +556,7 @@ export default function Assistant(): React.JSX.Element {
             <Form.Item name="personality" label={t('personality')}>
               <Input />
             </Form.Item>
-            <Form.Item name="detail" label={t('detail')}>
+            <Form.Item name="details" label={t('details')}>
               <Input.TextArea />
             </Form.Item>
             <Form.Item name="modelId" label={t('modelId')} rules={[{ required: true }]}>

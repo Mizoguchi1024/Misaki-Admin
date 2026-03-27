@@ -3,7 +3,7 @@ export type AddAssistantAdminRequest = {
   gender: number
   birthday?: string
   personality?: string
-  detail?: string
+  details?: string
   modelId: string
   creatorId: string
   ownerId: string
@@ -14,7 +14,7 @@ export type SearchAssistantAdminRequest = {
   id?: string
   name?: string
   personality?: string
-  detail?: string
+  details?: string
   gender?: number
   birthday?: string
   modelId?: number
@@ -32,7 +32,7 @@ export type AssistantAdminResponse = {
   gender: number
   birthday: string
   personality: string
-  detail: string
+  details: string
   modelId: string
   creatorId: string
   ownerId: string
@@ -48,7 +48,7 @@ export type UpdateAssistantAdminRequest = {
   gender?: number
   birthday?: string
   personality?: string
-  detail?: string
+  details?: string
   modelId?: number
   creatorId?: number
   ownerId?: number

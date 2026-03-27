@@ -4,7 +4,7 @@
     "gender": "性别",
     "birthday": "生日",
     "personality": "性格",
-    "detail": "简介",
+    "details": "简介",
     "modelId": "模型ID",
     "creatorId": "创建者ID",
     "ownerId": "拥有者ID",

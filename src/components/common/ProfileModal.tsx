@@ -17,7 +17,7 @@ type FieldType = {
   birthday?: dayjs.Dayjs
   avatarPath?: string
   occupation?: string
-  detail?: string
+  details?: string
 }
 
 export default function ProfileModal({ open, onCancel }: ProfileModalProps): React.JSX.Element {
@@ -37,7 +37,7 @@ export default function ProfileModal({ open, onCancel }: ProfileModalProps): Rea
     gender,
     birthday,
     occupation,
-    detail,
+    details,
     createTime,
     version
   } = data?.data ?? {}
@@ -146,9 +146,9 @@ export default function ProfileModal({ open, onCancel }: ProfileModalProps): Rea
             >
               <Input placeholder={t('occupation')} maxLength={20} showCount spellCheck={false} />
             </Form.Item>
-            <Form.Item<FieldType> name="detail" label={t('detail')} initialValue={detail}>
+            <Form.Item<FieldType> name="details" label={t('details')} initialValue={details}>
               <Input.TextArea
-                placeholder={t('detail')}
+                placeholder={t('details')}
                 showCount
                 maxLength={100}
                 spellCheck={false}
