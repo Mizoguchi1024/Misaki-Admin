@@ -261,7 +261,7 @@ export default function EmailLog(): React.JSX.Element {
   ]
 
   return (
-    <div className="h-full w-full flex flex-col items-center gap-4 py-4 px-8">
+    <div className="h-full w-full flex flex-col items-center gap-4 py-4 px-8 overflow-hidden">
       <div className="flex items-center justify-start gap-4">
         <Tooltip
           title={t('refresh')}

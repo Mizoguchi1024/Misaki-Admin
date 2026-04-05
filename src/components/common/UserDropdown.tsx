@@ -1,5 +1,6 @@
 import {
   InfoCircleOutlined,
+  LoadingOutlined,
   LogoutOutlined,
   SettingOutlined,
   UserOutlined
@@ -82,7 +83,7 @@ export default function UserDropdown(): React.JSX.Element {
           itemContent: 'select-none'
         }}
       >
-        <Spin spinning={isLoading}>
+        <Spin spinning={isLoading} indicator={<LoadingOutlined spin />}>
           <Button size="large" color="default" variant="filled">
             <Avatar
               size="small"

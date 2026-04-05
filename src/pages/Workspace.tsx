@@ -44,7 +44,7 @@ export default function Workspace(): React.JSX.Element {
             : 'nightGreeting'
 
   return (
-    <div className="h-full w-full py-4 px-8 select-none">
+    <div className="h-full w-full py-4 px-8 overflow-y-auto scrollbar-style select-none">
       <div className="flex flex-col gap-6">
         <div className="flex flex-wrap items-center justify-between">
           <Typography.Title level={2} className="mb-0">
