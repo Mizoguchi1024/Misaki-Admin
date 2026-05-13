@@ -149,6 +149,7 @@ export default function EmailLog(): React.JSX.Element {
         </div>
       </div>
     ),
+    filteredValue: searchColumn === String(dataIndex) ? [searchText] : null,
     filterIcon: (filtered: boolean) => (
       <SearchOutlined style={{ color: filtered ? '#3142EF' : undefined }} />
     ),

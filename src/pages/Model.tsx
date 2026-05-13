@@ -148,6 +148,7 @@ export default function Model(): React.JSX.Element {
         </div>
       </div>
     ),
+    filteredValue: searchColumn === dataIndex ? [searchText] : null,
     filterIcon: (filtered: boolean) => (
       <SearchOutlined style={{ color: filtered ? '#3142EF' : undefined }} />
     ),
@@ -211,6 +212,7 @@ export default function Model(): React.JSX.Element {
         </div>
       </div>
     ),
+    filteredValue: searchColumn === dataIndex ? [searchText] : null,
     filterMultiple: false,
     filters: filterItems
   })

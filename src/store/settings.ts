@@ -2,17 +2,9 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import type { MessageInstance } from 'antd/es/message/interface'
 import type { Locale } from 'antd/es/locale'
-import zhCNModule from 'antd/locale/zh_CN'
-import enUSModule from 'antd/locale/en_US'
-import jaJPModule from 'antd/locale/ja_JP'
-
-function normalizeAntdLocale(module: Locale | { default: Locale }): Locale {
-  return 'default' in module ? module.default : module
-}
-
-const zh_CN = normalizeAntdLocale(zhCNModule)
-const en_US = normalizeAntdLocale(enUSModule)
-const ja_JP = normalizeAntdLocale(jaJPModule)
+import zh_CN from 'antd/locale/zh_CN'
+import en_US from 'antd/locale/en_US'
+import ja_JP from 'antd/locale/ja_JP'
 
 interface SettingsState {
   staticMessage: MessageInstance | null
