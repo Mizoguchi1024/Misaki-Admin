@@ -34,9 +34,9 @@ export default function SettingsModal({ open, onCancel }: SettingsModalProps): R
               defaultValue={language}
               prefix={<TranslationOutlined />}
               options={[
-                { value: 0, label: LanguageMap[0], icon: <SyncOutlined /> },
-                { value: 1, label: LanguageMap[1], icon: <SunOutlined /> },
-                { value: 2, label: LanguageMap[2], icon: <MoonOutlined /> }
+                { value: 0, label: LanguageMap[0] },
+                { value: 1, label: LanguageMap[1] },
+                { value: 2, label: LanguageMap[2] }
               ]}
               onChange={(value) => {
                 setPartial({ language: value })
@@ -49,9 +49,9 @@ export default function SettingsModal({ open, onCancel }: SettingsModalProps): R
               defaultValue={appearance.toString()}
               shape="round"
               options={[
-                { label: t('auto'), value: '0' },
-                { label: t('light'), value: '1' },
-                { label: t('dark'), value: '2' }
+                { label: t('auto'), value: '0', icon: <SyncOutlined />},
+                { label: t('light'), value: '1', icon: <SunOutlined /> },
+                { label: t('dark'), value: '2', icon: <MoonOutlined />}
               ]}
               onChange={(value) => {
                 setPartial({ appearance: Number(value) })

@@ -22,5 +22,15 @@
   "searchField": "Search {{field}}",
   "search": "Search",
   "filter": "Filter",
-  "clear": "Clear"
+  "clear": "Clear",
+  "bug": "Bug",
+  "task": "Task",
+  "performance": "Performance",
+  "experience": "Experience",
+  "advice": "Adivce",
+  "new": "New",
+  "processing": "Processing",
+  "rejected": "Rejected",
+  "resolved": "Resolved",
+  "closed": "Closed"
 }
