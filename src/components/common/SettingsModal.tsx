@@ -1,6 +1,7 @@
 import { deleteAccount } from '@/api/front/user'
 import { LanguageMap, useSettingsStore } from '@/store/settings'
 import { useUserStore } from '@/store/user'
+import { MoonOutlined, SunOutlined, SyncOutlined, TranslationOutlined } from '@ant-design/icons'
 import { useMutation } from '@tanstack/react-query'
 import { Button, Modal, Segmented, Select, Slider, Tabs } from 'antd'
 import { useTranslation } from 'react-i18next'
@@ -30,12 +31,12 @@ export default function SettingsModal({ open, onCancel }: SettingsModalProps): R
           <div className="flex justify-between items-center min-h-8 flex-none">
             <span>{t('language')}</span>
             <Select
-              className="w-24"
               defaultValue={language}
+              prefix={<TranslationOutlined />}
               options={[
-                { value: 0, label: LanguageMap[0] },
-                { value: 1, label: LanguageMap[1] },
-                { value: 2, label: LanguageMap[2] }
+                { value: 0, label: LanguageMap[0], icon: <SyncOutlined /> },
+                { value: 1, label: LanguageMap[1], icon: <SunOutlined /> },
+                { value: 2, label: LanguageMap[2], icon: <MoonOutlined /> }
               ]}
               onChange={(value) => {
                 setPartial({ language: value })

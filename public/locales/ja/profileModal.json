@@ -4,7 +4,7 @@
   "profileSaved": "プロフィールを保存しました",
   "requiredTemplate": "{{label}}を入力してください",
   "id": "ID",
-  "email": "メールアドレス",
+  "email": "メール先",
   "username": "ユーザー名",
   "gender": "性別",
   "unknown": "非公開",

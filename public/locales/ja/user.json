@@ -1,7 +1,7 @@
 {
   "id": "ID",
   "authRole": "権限",
-  "email": "メールアドレス",
+  "email": "メール先",
   "username": "ユーザー名",
   "password": "パスワード",
   "newPassword": "新しいパスワード",
